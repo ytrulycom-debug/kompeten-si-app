@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js build
+.next/
+out/
+
+# Env files (secrets)
+.env*.local
+.env
+
+# Misc
+.DS_Store
+*.pem
+npm-debug.log*
