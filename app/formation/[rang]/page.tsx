@@ -66,7 +66,7 @@ export default async function FormationPage({
         </p>
       </div>
 
-      {/* Jour 1 — visible */}
+      {/* Jour 1 visible */}
       <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm mb-2">
         <div className="flex items-center gap-3 mb-3">
           <span className="text-lg">{JOUR_EMOJIS[0]}</span>
@@ -80,7 +80,7 @@ export default async function FormationPage({
         </p>
       </div>
 
-      {/* Jours 2-7 — verrouillés */}
+      {/* Jours 2-7 verrouillés */}
       {[1, 2, 3, 4, 5, 6].map((idx) => (
         <div
           key={idx}
@@ -88,9 +88,7 @@ export default async function FormationPage({
         >
           <div className="flex items-center gap-3">
             <span className="text-lg">{JOUR_EMOJIS[idx]}</span>
-            <span className="font-semibold text-sm text-gray-500">
-              Jour {idx + 1} / 7
-            </span>
+            <span className="font-semibold text-sm text-gray-500">Jour {idx + 1} / 7</span>
             <span className="ml-auto text-lg">🔒</span>
           </div>
           <p className="text-xs text-gray-400 mt-2">
@@ -103,10 +101,10 @@ export default async function FormationPage({
       <div className="mt-6 bg-brand-green text-white rounded-xl p-5 text-center">
         <p className="text-lg font-bold mb-1">📲 Recevoir les 7 jours sur Telegram</p>
         <p className="text-sm text-green-200 mb-4">
-          Inscris-toi gratuitement et reçois une nouvelle leçon chaque matin à 8h.
+          Inscris-toi gratuitement et reçois un lien chaque matin à 8h.
         </p>
         <a
-          href={`https://t.me/Kompetensi12bot`}
+          href="https://t.me/Kompetensi12bot"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-white text-brand-green font-bold px-6 py-3 rounded-xl text-sm hover:bg-green-50 transition"
@@ -118,29 +116,20 @@ export default async function FormationPage({
         </p>
       </div>
 
-      {/* Lien pour inscrits */}
       <div className="mt-4 text-center">
-        <Link
-          href="/ma-formation"
-          className="text-sm text-brand-green hover:underline font-medium"
-        >
+        <Link href="/ma-formation" className="text-sm text-brand-green hover:underline font-medium">
           Tu es déjà inscrit ? → Voir ta leçon du jour
         </Link>
       </div>
 
       <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
-        <p className="text-sm font-medium text-yellow-800">
-          💪 7 jours pour transformer ta carrière !
-        </p>
+        <p className="text-sm font-medium text-yellow-800">💪 7 jours pour transformer ta carrière !</p>
         <p className="text-xs text-yellow-600 mt-1">
           Consacre 30 minutes par jour à cette formation pour maîtriser {item.competence}.
         </p>
       </div>
 
-      <Link
-        href="/"
-        className="block mt-6 text-center text-sm text-brand-green hover:underline"
-      >
+      <Link href="/" className="block mt-6 text-center text-sm text-brand-green hover:underline">
         ← Voir les autres compétences de la semaine
       </Link>
     </div>
