@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import JoursAccordion from '../../components/JoursAccordion'
 
 interface Competence {
   rang: number
@@ -16,8 +17,6 @@ interface ApiData {
 }
 
 export const revalidate = 604800
-
-const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
 
 async function getData(): Promise<ApiData | null> {
   const webhookUrl = process.env.N8N_WEBHOOK_URL
@@ -68,24 +67,9 @@ export default async function FormationPage({
 
       {/* Jours de formation */}
       {item.jours.length > 0 ? (
-        <div className="flex flex-col gap-4">
-          {item.jours.map((jourTexte, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm"
-            >
-              <div className="flex items-start gap-3">
-                <span className="text-xl mt-0.5">{JOUR_EMOJIS[idx] || '📌'}</span>
-                <div>
-                  <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
-                    {jourTexte}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <JoursAccordion jours={item.jours} />
       ) : (
+        // Fallback si la formation n'est pas découpée en jours
         <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
             {item.micro_formation}
@@ -122,6 +106,7 @@ export default async function FormationPage({
         </p>
       </div>
 
+      {/* Lien retour */}
       <Link
         href="/"
         className="block mt-6 text-center text-sm text-brand-green hover:underline"
