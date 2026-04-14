@@ -3,7 +3,15 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'KompetenSI — Radar des compétences en Afrique',
-  description: "Les 5 compétences les plus demandées cette semaine en Afrique de l'Ouest, avec une micro-formation de 7 jours.",
+  description: 'Les 5 compétences les plus demandées cette semaine en Afrique de l\'Ouest, avec une micro-formation de 7 jours.',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'KompetenSI',
+  },
+  formatDetection: { telephone: false },
+  themeColor: '#15803d',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
