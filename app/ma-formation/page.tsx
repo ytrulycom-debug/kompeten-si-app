@@ -46,9 +46,10 @@ function MaFormationContent() {
   }, [])
 
   // Lecture directe depuis window.location (plus fiable que useSearchParams dans les WebViews)
+  // Supporte ?cid= (nouveau, sans underscore) et ?chat_id= (rétrocompatibilité)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const id = params.get('chat_id') ?? ''
+    const id = params.get('cid') ?? params.get('chat_id') ?? ''
     if (id) {
       setChatId(id)
       setChatIdFromUrl(id)
@@ -78,7 +79,7 @@ function MaFormationContent() {
         </div>
       )}
 
-      {/* Formulaire — affiché seulement si pas de chat_id dans l'URL et pas encore de données */}
+      {/* Formulaire — affiché seulement si pas de cid dans l'URL et pas encore de données */}
       {!loading && !data && !chatIdFromUrl && (
         <>
           <div className="bg-brand-green text-white rounded-xl p-5 mb-6">
@@ -100,7 +101,7 @@ function MaFormationContent() {
               className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green mb-3"
             />
             <p className="text-xs text-gray-400 mb-4">
-              Ton identifiant se trouve dans le message reçu sur Telegram à l&apos;inscription.
+              Ton identifiant se trouve dans le message reçu sur Telegram à l'inscription.
             </p>
             <button
               type="submit"
@@ -123,7 +124,7 @@ function MaFormationContent() {
             rel="noopener noreferrer"
             className="inline-block mt-3 text-sm font-semibold text-brand-green hover:underline"
           >
-            → S&apos;inscrire sur Telegram
+            → S'inscrire sur Telegram
           </a>
         </div>
       )}
