@@ -86,7 +86,6 @@ export default async function FormationPage({
           ))}
         </div>
       ) : (
-        // Fallback si la formation n'est pas découpée en jours
         <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
             {item.micro_formation}
@@ -94,8 +93,27 @@ export default async function FormationPage({
         </div>
       )}
 
+      {/* CTA Telegram */}
+      <div className="mt-8 bg-brand-green text-white rounded-xl p-5 text-center">
+        <p className="text-lg font-bold mb-1">📲 Recevoir cette formation sur Telegram</p>
+        <p className="text-sm text-green-200 mb-4">
+          Inscris-toi gratuitement et reçois le bon contenu chaque matin pendant 7 jours.
+        </p>
+        <a
+          href={`https://t.me/Kompetensi12bot`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-white text-brand-green font-bold px-6 py-3 rounded-xl text-sm hover:bg-green-50 transition"
+        >
+          Envoie &laquo;&nbsp;{rang}&nbsp;&raquo; sur le bot → Démarrer
+        </a>
+        <p className="text-xs text-green-300 mt-3">
+          Une fois sur Telegram, envoie simplement le chiffre <strong>{rang}</strong> pour démarrer.
+        </p>
+      </div>
+
       {/* Footer motivation */}
-      <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
+      <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
         <p className="text-sm font-medium text-yellow-800">
           💪 7 jours pour transformer ta carrière !
         </p>
@@ -104,7 +122,6 @@ export default async function FormationPage({
         </p>
       </div>
 
-      {/* Lien retour */}
       <Link
         href="/"
         className="block mt-6 text-center text-sm text-brand-green hover:underline"
