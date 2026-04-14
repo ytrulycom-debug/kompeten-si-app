@@ -46,6 +46,7 @@ export default async function FormationPage({
   if (!item) notFound()
 
   const jour1 = item.jours?.[0] ?? item.micro_formation ?? ''
+  const teaserLines = jour1.split('\n').filter((l: string) => l.trim()).slice(0, 5).join('\n')
 
   return (
     <div>
@@ -78,10 +79,10 @@ export default async function FormationPage({
           </span>
         </div>
         <div className="relative px-4 pt-3 pb-0">
-          <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed line-clamp-6">
-            {jour1}
+          <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
+            {teaserLines}
           </p>
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent" />
+          <div className="h-8 bg-gradient-to-t from-white to-transparent -mt-2" />
         </div>
         <div className="px-4 pb-4 pt-2 text-center">
           <a
