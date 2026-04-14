@@ -12,10 +12,7 @@ export async function GET(req: Request) {
   const formWebhookUrl = process.env.N8N_WEBHOOK_URL
 
   if (!userWebhookUrl || !formWebhookUrl) {
-    return Response.json(
-      { error: 'Configuration manquante', vars: { user: !!userWebhookUrl, form: !!formWebhookUrl } },
-      { status: 500 }
-    )
+    return Response.json({ error: 'Configuration manquante' }, { status: 500 })
   }
 
   // 1. Lookup utilisateur
@@ -47,11 +44,14 @@ export async function GET(req: Request) {
   const rang = parseInt(user.competence_choisie)
   const competence = formData.competences?.find((c: { rang: number }) => c.rang === rang)
 
+  const contenuBrut = competence?.jours?.[jourActuel - 1] ?? ''
+  const contenuNettoye = contenuBrut.replace(/\|\|\|[\s\S]*$/, '').trim()
+
   return Response.json({
     jour_actuel: jourActuel,
     rang,
     competence: competence?.competence ?? '',
-    contenu_du_jour: competence?.jours?.[jourActuel - 1] ?? '',
+    contenu_du_jour: contenuNettoye,
     nb_offres: competence?.nb_offres ?? 0,
     semaine: formData.semaine ?? '',
   })
