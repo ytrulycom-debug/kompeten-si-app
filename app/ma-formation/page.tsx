@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
 
 interface ParcoursData {
   jour_actuel: number
@@ -17,10 +15,8 @@ interface ParcoursData {
 const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
 
 function MaFormationContent() {
-  const searchParams = useSearchParams()
-  const chatIdFromUrl = searchParams.get('chat_id') ?? ''
-
-  const [chatId, setChatId] = useState(chatIdFromUrl)
+  const [chatId, setChatId] = useState('')
+  const [chatIdFromUrl, setChatIdFromUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<ParcoursData | null>(null)
   const [erreur, setErreur] = useState<string | null>(null)
@@ -49,11 +45,16 @@ function MaFormationContent() {
     }
   }, [])
 
+  // Lecture directe depuis window.location (plus fiable que useSearchParams dans les WebViews)
   useEffect(() => {
-    if (chatIdFromUrl) {
-      chargerFormation(chatIdFromUrl)
+    const params = new URLSearchParams(window.location.search)
+    const id = params.get('chat_id') ?? ''
+    if (id) {
+      setChatId(id)
+      setChatIdFromUrl(id)
+      chargerFormation(id)
     }
-  }, [chatIdFromUrl, chargerFormation])
+  }, [chargerFormation])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -69,6 +70,7 @@ function MaFormationContent() {
         ← Retour au classement
       </Link>
 
+      {/* Chargement initial */}
       {loading && !data && (
         <div className="flex flex-col items-center justify-center py-16 gap-4">
           <div className="w-10 h-10 border-4 border-brand-green border-t-transparent rounded-full animate-spin" />
@@ -76,6 +78,7 @@ function MaFormationContent() {
         </div>
       )}
 
+      {/* Formulaire — affiché seulement si pas de chat_id dans l'URL et pas encore de données */}
       {!loading && !data && !chatIdFromUrl && (
         <>
           <div className="bg-brand-green text-white rounded-xl p-5 mb-6">
@@ -97,7 +100,7 @@ function MaFormationContent() {
               className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green mb-3"
             />
             <p className="text-xs text-gray-400 mb-4">
-              Ton identifiant se trouve dans le message reçu sur Telegram à l'inscription.
+              Ton identifiant se trouve dans le message reçu sur Telegram à l&apos;inscription.
             </p>
             <button
               type="submit"
@@ -110,6 +113,7 @@ function MaFormationContent() {
         </>
       )}
 
+      {/* Erreur */}
       {erreur && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
           <p className="text-sm text-red-700">{erreur}</p>
@@ -119,13 +123,15 @@ function MaFormationContent() {
             rel="noopener noreferrer"
             className="inline-block mt-3 text-sm font-semibold text-brand-green hover:underline"
           >
-            → S'inscrire sur Telegram
+            → S&apos;inscrire sur Telegram
           </a>
         </div>
       )}
 
+      {/* Résultat */}
       {data && (
         <div>
+          {/* En-tête */}
           <div className="bg-brand-green text-white rounded-xl p-5 mb-4">
             <p className="text-xs text-green-200 uppercase tracking-wide font-medium">
               {data.semaine}
@@ -134,6 +140,8 @@ function MaFormationContent() {
             <p className="text-sm text-green-200 mt-1">
               {data.nb_offres} offre{data.nb_offres > 1 ? 's' : ''} cette semaine
             </p>
+
+            {/* Barre de progression */}
             <div className="flex items-center gap-3 mt-4">
               <span className="text-sm font-bold bg-white text-brand-green px-3 py-1 rounded-full">
                 Jour {data.jour_actuel} / 7
@@ -148,6 +156,8 @@ function MaFormationContent() {
                 {data.jour_actuel === 7 ? '✅' : `${7 - data.jour_actuel}j restants`}
               </span>
             </div>
+
+            {/* Pastilles jours */}
             <div className="flex gap-1.5 mt-3">
               {Array.from({ length: 7 }, (_, i) => (
                 <div
@@ -160,6 +170,7 @@ function MaFormationContent() {
             </div>
           </div>
 
+          {/* Contenu du jour */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-4">
             <div className="bg-gray-50 border-b border-gray-100 px-4 py-3 flex items-center gap-2">
               <span className="text-lg">{JOUR_EMOJIS[data.jour_actuel - 1] || '📌'}</span>
@@ -174,6 +185,7 @@ function MaFormationContent() {
             </div>
           </div>
 
+          {/* Message de progression */}
           {data.jour_actuel < 7 ? (
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center mb-4">
               <p className="text-sm font-semibold text-yellow-800">
@@ -192,6 +204,7 @@ function MaFormationContent() {
             </div>
           )}
 
+          {/* Changer d'identifiant */}
           <button
             onClick={() => { setData(null); setChatId('') }}
             className="block w-full text-center text-xs text-gray-400 hover:text-gray-600 mt-2"
@@ -205,13 +218,5 @@ function MaFormationContent() {
 }
 
 export default function MaFormationPage() {
-  return (
-    <Suspense fallback={
-      <div className="flex items-center justify-center py-16">
-        <div className="w-10 h-10 border-4 border-brand-green border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
-      <MaFormationContent />
-    </Suspense>
-  )
+  return <MaFormationContent />
 }
