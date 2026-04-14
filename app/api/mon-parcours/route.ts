@@ -16,7 +16,7 @@ export async function GET(req: Request) {
   }
 
   // 1. Lookup utilisateur
-  const userRes = await fetch(`${userWebhookUrl}?chat_id=${encodeURIComponent(chatId)}`)
+  const userRes = await fetch(`${userWebhookUrl}?chat_id=${encodeURIComponent(chatId)}`, { cache: 'no-store' })
   if (!userRes.ok) {
     return Response.json({ error: 'Erreur serveur' }, { status: 502 })
   }
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
   const jourActuel = Math.min(7, Math.max(1, diffDays + 1))
 
   // 3. R\u00e9cup\u00e9rer les formations
-  const formRes = await fetch(formWebhookUrl)
+  const formRes = await fetch(formWebhookUrl, { cache: 'no-store' })
   if (!formRes.ok) {
     return Response.json({ error: 'Impossible de charger les formations' }, { status: 502 })
   }
