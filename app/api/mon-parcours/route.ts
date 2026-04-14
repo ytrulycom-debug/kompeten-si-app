@@ -12,7 +12,10 @@ export async function GET(req: Request) {
   const formWebhookUrl = process.env.N8N_WEBHOOK_URL
 
   if (!userWebhookUrl || !formWebhookUrl) {
-    return Response.json({ error: 'Configuration manquante' }, { status: 500 })
+    return Response.json(
+      { error: 'Configuration manquante', vars: { user: !!userWebhookUrl, form: !!formWebhookUrl } },
+      { status: 500 }
+    )
   }
 
   // 1. Lookup utilisateur
@@ -23,7 +26,7 @@ export async function GET(req: Request) {
   const user = await userRes.json()
 
   if (!user.found) {
-    return Response.json({ error: 'Utilisateur non trouvé' }, { status: 404 })
+    return Response.json({ error: 'Utilisateur non trouv\u00e9' }, { status: 404 })
   }
 
   // 2. Calcul du jour actuel
@@ -34,7 +37,7 @@ export async function GET(req: Request) {
   )
   const jourActuel = Math.min(7, Math.max(1, diffDays + 1))
 
-  // 3. Récupérer les formations
+  // 3. R\u00e9cup\u00e9rer les formations
   const formRes = await fetch(formWebhookUrl)
   if (!formRes.ok) {
     return Response.json({ error: 'Impossible de charger les formations' }, { status: 502 })
