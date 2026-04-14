@@ -86,7 +86,7 @@ export default async function FormationPage({
         </div>
         <div className="px-4 pb-4 pt-2 text-center">
           <a
-            href="https://t.me/Kompetensi12bot"
+            href={`https://t.me/Kompetensi12bot?start=${rang}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-brand-green text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-green-800 transition"
@@ -122,15 +122,15 @@ export default async function FormationPage({
           Inscris-toi gratuitement et reçois une nouvelle leçon chaque matin à 8h.
         </p>
         <a
-          href="https://t.me/Kompetensi12bot"
+          href={`https://t.me/Kompetensi12bot?start=${rang}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block bg-white text-brand-green font-bold px-6 py-3 rounded-xl text-sm hover:bg-green-50 transition"
         >
-          Envoie &laquo;&nbsp;{rang}&nbsp;&raquo; sur le bot → Démarrer
+          Démarrer ma formation gratuitement →
         </a>
         <p className="text-xs text-green-300 mt-3">
-          Une fois sur Telegram, envoie simplement le chiffre <strong>{rang}</strong> pour démarrer.
+          Appuie sur Start dans Telegram — l'inscription démarre automatiquement.
         </p>
       </div>
 
