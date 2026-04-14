@@ -15,13 +15,13 @@ interface ApiData {
   error?: string
 }
 
-export const revalidate = 3600
+export const dynamic = 'force-dynamic'
 
 async function getData(): Promise<ApiData | null> {
   const webhookUrl = process.env.N8N_WEBHOOK_URL
   if (!webhookUrl) return null
   try {
-    const res = await fetch(webhookUrl, { next: { revalidate: 3600 } })
+    const res = await fetch(webhookUrl, { cache: 'no-store' })
     if (!res.ok) return null
     return res.json()
   } catch {
