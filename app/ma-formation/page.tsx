@@ -206,7 +206,7 @@ function MaFormationContent() {
 
           {/* Changer d'identifiant */}
           <button
-            onClick={() => { setData(null); setChatId('') }}
+            onClick={() => { setData(null); setChatId(''); setChatIdFromUrl('') }}
             className="block w-full text-center text-xs text-gray-400 hover:text-gray-600 mt-2"
           >
             Utiliser un autre identifiant
