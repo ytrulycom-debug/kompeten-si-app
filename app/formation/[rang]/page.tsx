@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import JoursAccordion from '../../components/JoursAccordion'
 
 interface Competence {
   rang: number
@@ -30,6 +29,8 @@ async function getData(): Promise<ApiData | null> {
   }
 }
 
+const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
+
 export default async function FormationPage({
   params,
 }: {
@@ -44,9 +45,10 @@ export default async function FormationPage({
   const item = data.competences.find((c) => c.rang === rang)
   if (!item) notFound()
 
+  const jour1 = item.jours?.[0] ?? item.micro_formation ?? ''
+
   return (
     <div>
-      {/* Retour */}
       <Link
         href="/"
         className="inline-flex items-center gap-1 text-sm text-brand-green font-medium mb-5 hover:underline"
@@ -54,7 +56,6 @@ export default async function FormationPage({
         ← Retour au classement
       </Link>
 
-      {/* En-tête */}
       <div className="bg-brand-green text-white rounded-xl p-5 mb-6">
         <p className="text-xs text-green-200 uppercase tracking-wide font-medium">
           Micro-formation #{rang} · {data.semaine}
@@ -65,23 +66,44 @@ export default async function FormationPage({
         </p>
       </div>
 
-      {/* Jours de formation */}
-      {item.jours.length > 0 ? (
-        <JoursAccordion jours={item.jours} />
-      ) : (
-        // Fallback si la formation n'est pas découpée en jours
-        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-          <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
-            {item.micro_formation}
+      {/* Jour 1 — visible */}
+      <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm mb-2">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="text-lg">{JOUR_EMOJIS[0]}</span>
+          <span className="font-semibold text-sm text-gray-800">Jour 1 / 7</span>
+          <span className="ml-auto text-xs bg-green-100 text-brand-green font-medium px-2 py-0.5 rounded-full">
+            Gratuit
+          </span>
+        </div>
+        <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
+          {jour1}
+        </p>
+      </div>
+
+      {/* Jours 2-7 — verrouillés */}
+      {[1, 2, 3, 4, 5, 6].map((idx) => (
+        <div
+          key={idx}
+          className="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-2 opacity-70"
+        >
+          <div className="flex items-center gap-3">
+            <span className="text-lg">{JOUR_EMOJIS[idx]}</span>
+            <span className="font-semibold text-sm text-gray-500">
+              Jour {idx + 1} / 7
+            </span>
+            <span className="ml-auto text-lg">🔒</span>
+          </div>
+          <p className="text-xs text-gray-400 mt-2">
+            Inscris-toi sur Telegram pour débloquer ce jour.
           </p>
         </div>
-      )}
+      ))}
 
       {/* CTA Telegram */}
-      <div className="mt-8 bg-brand-green text-white rounded-xl p-5 text-center">
-        <p className="text-lg font-bold mb-1">📲 Recevoir cette formation sur Telegram</p>
+      <div className="mt-6 bg-brand-green text-white rounded-xl p-5 text-center">
+        <p className="text-lg font-bold mb-1">📲 Recevoir les 7 jours sur Telegram</p>
         <p className="text-sm text-green-200 mb-4">
-          Inscris-toi gratuitement et reçois le bon contenu chaque matin pendant 7 jours.
+          Inscris-toi gratuitement et reçois une nouvelle leçon chaque matin à 8h.
         </p>
         <a
           href={`https://t.me/Kompetensi12bot`}
@@ -96,7 +118,16 @@ export default async function FormationPage({
         </p>
       </div>
 
-      {/* Footer motivation */}
+      {/* Lien pour inscrits */}
+      <div className="mt-4 text-center">
+        <Link
+          href="/ma-formation"
+          className="text-sm text-brand-green hover:underline font-medium"
+        >
+          Tu es déjà inscrit ? → Voir ta leçon du jour
+        </Link>
+      </div>
+
       <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center">
         <p className="text-sm font-medium text-yellow-800">
           💪 7 jours pour transformer ta carrière !
@@ -106,7 +137,6 @@ export default async function FormationPage({
         </p>
       </div>
 
-      {/* Lien retour */}
       <Link
         href="/"
         className="block mt-6 text-center text-sm text-brand-green hover:underline"
