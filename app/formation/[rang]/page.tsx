@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import MarkdownContent from '@/components/MarkdownContent'
 
 interface Competence {
   rang: number
@@ -79,9 +80,7 @@ export default async function FormationPage({
           </span>
         </div>
         <div className="relative px-4 pt-3 pb-0">
-          <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
-            {teaserLines}
-          </p>
+          <MarkdownContent text={teaserLines} />
           <div className="h-8 bg-gradient-to-t from-white to-transparent -mt-2" />
         </div>
         <div className="px-4 pb-4 pt-2 text-center">

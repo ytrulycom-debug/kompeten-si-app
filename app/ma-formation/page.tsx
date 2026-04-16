@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import MarkdownContent from '@/components/MarkdownContent'
 
 interface ParcoursData {
   jour_actuel: number
@@ -14,28 +15,6 @@ interface ParcoursData {
 
 const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
 
-function renderWithLinks(text: string) {
-  const urlRegex = /https?:\/\/[^\s)>\]"]+/g
-  const parts = text.split(urlRegex)
-  const urls = text.match(urlRegex) ?? []
-  return parts.reduce((acc: React.ReactNode[], part, i) => {
-    if (part) acc.push(part)
-    if (urls[i]) {
-      acc.push(
-        <a
-          key={i}
-          href={urls[i]}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-brand-green underline break-all"
-        >
-          {urls[i]}
-        </a>
-      )
-    }
-    return acc
-  }, [])
-}
 
 function MaFormationContent() {
   const [chatId, setChatId] = useState('')
@@ -54,15 +33,15 @@ function MaFormationContent() {
       const json = await res.json()
       if (!res.ok) {
         if (res.status === 404) {
-          setErreur("Aucun compte trouv\u00e9. Inscris-toi d'abord sur Telegram.")
+          setErreur("Aucun compte trouvé. Inscris-toi d'abord sur Telegram.")
         } else {
-          setErreur('Une erreur est survenue. R\u00e9essaie dans quelques instants.')
+          setErreur('Une erreur est survenue. Réessaie dans quelques instants.')
         }
       } else {
         setData(json)
       }
     } catch {
-      setErreur('Impossible de contacter le serveur. V\u00e9rifie ta connexion.')
+      setErreur('Impossible de contacter le serveur. Vérifie ta connexion.')
     } finally {
       setLoading(false)
     }
@@ -90,7 +69,7 @@ function MaFormationContent() {
         href="/"
         className="inline-flex items-center gap-1 text-sm text-brand-green font-medium mb-5 hover:underline"
       >
-        \u2190 Retour au classement
+        ← Retour au classement
       </Link>
 
       {/* Chargement initial */}
@@ -101,14 +80,14 @@ function MaFormationContent() {
         </div>
       )}
 
-      {/* Formulaire \u2014 affich\u00e9 seulement si pas de chat_id dans l'URL et pas encore de donn\u00e9es */}
+      {/* Formulaire — affiché seulement si pas de chat_id dans l'URL et pas encore de données */}
       {!loading && !data && !chatIdFromUrl && (
         <>
           <div className="bg-brand-green text-white rounded-xl p-5 mb-6">
             <p className="text-xs text-green-200 uppercase tracking-wide font-medium">Suivi personnel</p>
             <h2 className="text-xl font-bold mt-1">Ma formation du jour</h2>
             <p className="text-sm text-green-200 mt-1">
-              Entre ton identifiant pour acc\u00e9der \u00e0 ta le\u00e7on du jour.
+              Entre ton identifiant pour accéder à ta leçon du jour.
             </p>
           </div>
           <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm mb-4">
@@ -123,7 +102,7 @@ function MaFormationContent() {
               className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green mb-3"
             />
             <p className="text-xs text-gray-400 mb-4">
-              Ton identifiant se trouve dans le message re\u00e7u sur Telegram \u00e0 l'inscription.
+              Ton identifiant se trouve dans le message reçu sur Telegram à l'inscription.
             </p>
             <button
               type="submit"
@@ -146,15 +125,15 @@ function MaFormationContent() {
             rel="noopener noreferrer"
             className="inline-block mt-3 text-sm font-semibold text-brand-green hover:underline"
           >
-            \u2192 S'inscrire sur Telegram
+            → S'inscrire sur Telegram
           </a>
         </div>
       )}
 
-      {/* R\u00e9sultat */}
+      {/* Résultat */}
       {data && (
         <div>
-          {/* En-t\u00eate */}
+          {/* En-tête */}
           <div className="bg-brand-green text-white rounded-xl p-5 mb-4">
             <p className="text-xs text-green-200 uppercase tracking-wide font-medium">
               {data.semaine}
@@ -176,7 +155,7 @@ function MaFormationContent() {
                 />
               </div>
               <span className="text-xs text-green-200">
-                {data.jour_actuel === 7 ? '\u2705' : `${7 - data.jour_actuel}j restants`}
+                {data.jour_actuel === 7 ? '✅' : `${7 - data.jour_actuel}j restants`}
               </span>
             </div>
 
@@ -196,15 +175,13 @@ function MaFormationContent() {
           {/* Contenu du jour */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-4">
             <div className="bg-gray-50 border-b border-gray-100 px-4 py-3 flex items-center gap-2">
-              <span className="text-lg">{JOUR_EMOJIS[data.jour_actuel - 1] || '\ud83d\udccc'}</span>
+              <span className="text-lg">{JOUR_EMOJIS[data.jour_actuel - 1] || '📌'}</span>
               <span className="font-semibold text-sm text-gray-800">
-                Jour {data.jour_actuel} \u2014 Le\u00e7on du jour
+                Jour {data.jour_actuel} — Leçon du jour
               </span>
             </div>
             <div className="p-5">
-              <p className="text-sm text-gray-800 whitespace-pre-line leading-relaxed">
-                {renderWithLinks(data.contenu_du_jour)}
-              </p>
+              <MarkdownContent text={data.contenu_du_jour} />
             </div>
           </div>
 
@@ -212,17 +189,17 @@ function MaFormationContent() {
           {data.jour_actuel < 7 ? (
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-center mb-4">
               <p className="text-sm font-semibold text-yellow-800">
-                \u2728 Reviens demain pour le Jour {data.jour_actuel + 1}
+                ✨ Reviens demain pour le Jour {data.jour_actuel + 1}
               </p>
               <p className="text-xs text-yellow-600 mt-1">
-                Tu recevras un lien sur Telegram \u00e0 8h chaque matin.
+                Tu recevras un lien sur Telegram à 8h chaque matin.
               </p>
             </div>
           ) : (
             <div className="bg-green-50 border border-green-300 rounded-xl p-4 text-center mb-4">
-              <p className="text-lg font-bold text-brand-green">\ud83c\udf89 Formation termin\u00e9e !</p>
+              <p className="text-lg font-bold text-brand-green">🎉 Formation terminée !</p>
               <p className="text-sm text-green-700 mt-1">
-                Tu ma\u00eetrises maintenant les bases de {data.competence}.
+                Tu maîtrises maintenant les bases de {data.competence}.
               </p>
             </div>
           )}
