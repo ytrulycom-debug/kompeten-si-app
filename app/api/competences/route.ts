@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 
-// Revalide les données côté Next.js toutes les heures
 export const revalidate = 3600
 
 export async function GET() {

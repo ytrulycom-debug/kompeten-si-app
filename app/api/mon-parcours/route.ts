@@ -1,8 +1,21 @@
 export const dynamic = 'force-dynamic'
 
+async function fetchJson(url: string) {
+  const res = await fetch(url, {
+    cache: 'no-store',
+    signal: AbortSignal.timeout(5000),
+  })
+
+  if (!res.ok) {
+    throw new Error(`Upstream a répondu avec le statut ${res.status}`)
+  }
+
+  return res.json()
+}
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const chatId = searchParams.get('chat_id')
+  const chatId = searchParams.get('chat_id')?.trim()
 
   if (!chatId) {
     return Response.json({ error: 'chat_id manquant' }, { status: 400 })
@@ -15,44 +28,66 @@ export async function GET(req: Request) {
     return Response.json({ error: 'Configuration manquante' }, { status: 500 })
   }
 
-  // 1. Lookup utilisateur
-  const userRes = await fetch(`${userWebhookUrl}?chat_id=${encodeURIComponent(chatId)}`, { cache: 'no-store' })
-  if (!userRes.ok) {
-    return Response.json({ error: 'Erreur serveur' }, { status: 502 })
+  try {
+    const user = await fetchJson(
+      `${userWebhookUrl}?chat_id=${encodeURIComponent(chatId)}`
+    )
+
+    if (!user?.found) {
+      return Response.json({ error: 'Utilisateur non trouvé' }, { status: 404 })
+    }
+
+    const dateInscription = new Date(user.date_inscription)
+    if (Number.isNaN(dateInscription.getTime())) {
+      return Response.json(
+        { error: 'date_inscription invalide' },
+        { status: 502 }
+      )
+    }
+
+    const today = new Date()
+    const diffDays = Math.floor(
+      (today.getTime() - dateInscription.getTime()) / 86400000
+    )
+    const jourActuel = Math.min(7, Math.max(1, diffDays + 1))
+
+    const formData = await fetchJson(formWebhookUrl)
+    const rang = Number.parseInt(user.competence_choisie, 10)
+
+    if (!Number.isInteger(rang)) {
+      return Response.json(
+        { error: 'compétence_choisie invalide' },
+        { status: 502 }
+      )
+    }
+
+    const competence = formData.competences?.find(
+      (c: { rang: number }) => c.rang === rang
+    )
+
+    if (!competence) {
+      return Response.json(
+        { error: 'Compétence introuvable dans les données de formation' },
+        { status: 404 }
+      )
+    }
+
+    const contenuBrut = competence.jours?.[jourActuel - 1] ?? ''
+    const contenuNettoye = contenuBrut.replace(/\|\|\|[\s\S]*$/, '').trim()
+
+    return Response.json({
+      jour_actuel: jourActuel,
+      rang,
+      competence: competence.competence ?? '',
+      contenu_du_jour: contenuNettoye,
+      nb_offres: competence.nb_offres ?? 0,
+      semaine: formData.semaine ?? '',
+    })
+  } catch (error) {
+    console.error('[KompetenSI mon-parcours] Erreur:', error)
+    return Response.json(
+      { error: 'Impossible de récupérer le parcours utilisateur' },
+      { status: 502 }
+    )
   }
-  const user = await userRes.json()
-
-  if (!user.found) {
-    return Response.json({ error: 'Utilisateur non trouv\u00e9' }, { status: 404 })
-  }
-
-  // 2. Calcul du jour actuel
-  const dateInscription = new Date(user.date_inscription)
-  const today = new Date()
-  const diffDays = Math.floor(
-    (today.getTime() - dateInscription.getTime()) / 86400000
-  )
-  const jourActuel = Math.min(7, Math.max(1, diffDays + 1))
-
-  // 3. R\u00e9cup\u00e9rer les formations
-  const formRes = await fetch(formWebhookUrl, { cache: 'no-store' })
-  if (!formRes.ok) {
-    return Response.json({ error: 'Impossible de charger les formations' }, { status: 502 })
-  }
-  const formData = await formRes.json()
-
-  const rang = parseInt(user.competence_choisie)
-  const competence = formData.competences?.find((c: { rang: number }) => c.rang === rang)
-
-  const contenuBrut = competence?.jours?.[jourActuel - 1] ?? ''
-  const contenuNettoye = contenuBrut.replace(/\|\|\|[\s\S]*$/, '').trim()
-
-  return Response.json({
-    jour_actuel: jourActuel,
-    rang,
-    competence: competence?.competence ?? '',
-    contenu_du_jour: contenuNettoye,
-    nb_offres: competence?.nb_offres ?? 0,
-    semaine: formData.semaine ?? '',
-  })
 }

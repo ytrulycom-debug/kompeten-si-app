@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import './globals.css'
 
@@ -12,27 +12,37 @@ export const metadata: Metadata = {
     title: 'KompetenSI',
   },
   formatDetection: { telephone: false },
+}
+
+export const viewport: Viewport = {
   themeColor: '#15803d',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body className="min-h-screen bg-brand-light">
-        <header className="bg-brand-green text-white py-4 px-4 shadow">
-          <div className="max-w-2xl mx-auto flex items-center gap-3">
-            <span className="text-2xl">🎯</span>
+      <body className="min-h-screen bg-brand-light text-brand-dark">
+        <header className="relative overflow-hidden bg-brand-green px-4 py-5 text-white shadow">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,166,35,0.28),_transparent_26%),linear-gradient(120deg,_rgba(255,255,255,0.08),_transparent_45%)]" />
+          <div className="relative mx-auto flex max-w-2xl items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/12 text-2xl shadow-sm backdrop-blur-sm">
+              🎯
+            </span>
             <div>
               <h1 className="text-xl font-bold leading-tight">KompetenSI</h1>
-              <p className="text-xs text-green-200">Radar des compétences · Afrique de l&apos;Ouest</p>
+              <p className="text-xs text-green-100">
+                Radar des compétences · Afrique de l&apos;Ouest
+              </p>
             </div>
           </div>
         </header>
-        <main className="max-w-2xl mx-auto px-4 py-6">
+        <main className="mx-auto max-w-2xl px-4 py-6">
           {children}
         </main>
-        <footer className="text-center text-xs text-gray-400 py-6">
-          Propulsé par KompetenSI 🇧🇫 · Données mises à jour chaque lundi
+        <footer className="px-4 py-8 text-center text-xs text-gray-500">
+          <div className="mx-auto max-w-2xl rounded-3xl border border-white/60 bg-white/60 px-4 py-4 shadow-sm backdrop-blur">
+            Propulsé par KompetenSI 🇧🇫 · Données mises à jour chaque lundi
+          </div>
         </footer>
         <Analytics />
       </body>

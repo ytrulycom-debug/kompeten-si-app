@@ -9,7 +9,6 @@ interface Props {
 
 function parseInline(text: string, key: number): React.ReactNode {
   const parts: React.ReactNode[] = []
-  // Match **bold**, *italic*, and URLs in order
   const regex = /(\*\*(.+?)\*\*)|(\*(.+?)\*)|(https?:\/\/[^\s)>\]"]+)/g
   let last = 0
   let match: RegExpExecArray | null
@@ -19,13 +18,10 @@ function parseInline(text: string, key: number): React.ReactNode {
       parts.push(text.slice(last, match.index))
     }
     if (match[1]) {
-      // **bold**
       parts.push(<strong key={`b-${match.index}`} className="font-semibold">{match[2]}</strong>)
     } else if (match[3]) {
-      // *italic*
       parts.push(<em key={`i-${match.index}`}>{match[4]}</em>)
     } else if (match[5]) {
-      // URL
       parts.push(
         <a
           key={`url-${match.index}`}
@@ -52,15 +48,12 @@ export default function MarkdownContent({ text, className = '' }: Props) {
   while (i < lines.length) {
     const line = lines[i]
 
-    // Skip empty lines (used as paragraph separators — handled below)
     if (!line.trim()) {
-      // Add spacing between blocks
       elements.push(<div key={`space-${i}`} className="h-2" />)
       i++
       continue
     }
 
-    // ## Heading 2
     if (line.startsWith('## ')) {
       elements.push(
         <h3 key={i} className="font-bold text-gray-900 text-sm mt-3 mb-1">
@@ -71,7 +64,6 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
-    // ### Heading 3
     if (line.startsWith('### ')) {
       elements.push(
         <h4 key={i} className="font-semibold text-gray-800 text-sm mt-2 mb-0.5">
@@ -82,7 +74,6 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
-    // **Titre :** ou **Titre** seul sur une ligne (titre de section courant dans DeepSeek)
     if (/^\*\*[^*]+\*\*\s*:?\s*$/.test(line.trim())) {
       elements.push(
         <h4 key={i} className="font-bold text-gray-900 text-sm mt-3 mb-1">
@@ -93,9 +84,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
-    // - bullet list item or • bullet
     if (/^[-•]\s+/.test(line)) {
-      // Collect consecutive bullet items
       const items: string[] = []
       while (i < lines.length && /^[-•]\s+/.test(lines[i])) {
         items.push(lines[i].replace(/^[-•]\s+/, ''))
@@ -114,7 +103,6 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
-    // Numbered list: 1. item
     if (/^\d+\.\s+/.test(line)) {
       const items: string[] = []
       const startNum = parseInt(line)
@@ -135,7 +123,6 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
-    // Normal paragraph line
     elements.push(
       <p key={i} className="text-sm text-gray-800 leading-relaxed">
         {parseInline(line, i)}

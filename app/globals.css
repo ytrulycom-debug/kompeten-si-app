@@ -8,6 +8,8 @@
 }
 
 body {
-  background-color: #FFF8F0;
+  background:
+    radial-gradient(circle at top left, rgba(245, 166, 35, 0.12), transparent 24%),
+    linear-gradient(180deg, #fffaf4 0%, #fff8f0 46%, #f8fbf8 100%);
   color: #1A1A2E;
 }
