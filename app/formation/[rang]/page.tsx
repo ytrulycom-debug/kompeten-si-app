@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import MarkdownContent from '@/components/MarkdownContent'
-import NeonCta from '@/components/NeonCta'
 
 interface Competence {
   rang: number
@@ -157,8 +156,29 @@ export default async function FormationPage({
         </div>
       </section>
 
-      {/* Final CTA — Neon Flow */}
-      <NeonCta telegramLink={telegramLink} />
+      {/* Final CTA */}
+      <section className="rounded-3xl bg-brand-green p-6 text-center text-white sm:p-8">
+        <p className="text-sm font-semibold uppercase tracking-widest text-green-300">
+          Passage à l&apos;action
+        </p>
+        <h3 className="mt-3 text-2xl font-black tracking-tight">
+          Reçois tes 7 leçons sur Telegram
+        </h3>
+        <p className="mx-auto mt-3 max-w-sm text-lg leading-relaxed text-green-100">
+          Appuie sur le bouton, puis sur{' '}
+          <strong className="text-white">Start</strong> dans Telegram.
+          Ton parcours démarre automatiquement. Une leçon par matin.
+        </p>
+        <a
+          href={telegramLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-7 py-5 text-lg font-bold text-brand-green shadow-md transition hover:bg-green-50"
+        >
+          Démarrer gratuitement →
+        </a>
+        <p className="mt-3 text-base text-green-200">Aucun compte nécessaire · Gratuit</p>
+      </section>
 
       <Link
         href="/"
