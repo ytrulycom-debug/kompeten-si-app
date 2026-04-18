@@ -38,7 +38,7 @@ export default async function FormationPage({
   params: { rang: string }
 }) {
   const rang = parseInt(params.rang)
-  if (isNaN(rang) || rang < 1 || rang > 5) notFound()
+  if (isNaN(rang) || rang < 1 || rang > 10) notFound()
 
   const data = await getData()
   if (!data || !data.competences?.length) notFound()
