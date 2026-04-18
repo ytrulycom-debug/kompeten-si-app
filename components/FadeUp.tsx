@@ -11,10 +11,10 @@ interface Props {
 export default function FadeUp({ children, delay = 0, className }: Props) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], delay }}
+      viewport={{ once: true, margin: '-20px' }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay }}
       className={className}
     >
       {children}
