@@ -15,12 +15,6 @@ interface ParcoursData {
 
 const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
 
-const ENTRY_STEPS = [
-  'Ouvre le lien recu sur Telegram, ou colle ton identifiant ci-dessous.',
-  'KompetenSI retrouve ton parcours et le jour en cours automatiquement.',
-  'Lis ta lecon du jour puis reviens demain pour la suivante.',
-]
-
 function MaFormationContent() {
   const [chatId, setChatId] = useState('')
   const [chatIdFromUrl, setChatIdFromUrl] = useState('')
@@ -71,117 +65,42 @@ function MaFormationContent() {
 
   return (
     <div className="space-y-5">
+
       <Link
         href="/"
-        className="inline-flex items-center gap-1 text-sm font-medium text-brand-green hover:underline"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-apple-secondary transition hover:text-apple-text"
       >
-        ← Retour au classement
+        ← Retour
       </Link>
 
-      {!data && (
-        <section className="relative overflow-hidden rounded-[2rem] bg-brand-green p-5 text-white shadow-xl">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,166,35,0.35),_transparent_30%),radial-gradient(circle_at_left,_rgba(255,255,255,0.12),_transparent_28%)]" />
-          <div className="relative">
-            <p className="inline-flex rounded-full bg-white/14 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-green-50">
-              Suivi personnel
-            </p>
-            <h2 className="mt-4 text-2xl font-extrabold leading-tight">
-              Retrouve ta leçon du jour en quelques secondes
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-green-100">
-              Si tu es déjà inscrit sur Telegram, entre ton identifiant pour reprendre
-              exactement là où tu en es dans ta formation.
-            </p>
-            <div className="mt-5 grid gap-3 rounded-3xl bg-white/10 p-4 backdrop-blur-sm sm:grid-cols-3">
-              {ENTRY_STEPS.map((step, index) => (
-                <div key={step} className="rounded-2xl bg-white/8 p-3">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-green-50">
-                    Étape {index + 1}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-green-50">{step}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {loading && !data && (
-        <div className="rounded-[1.75rem] border border-brand-green/10 bg-white/80 py-16 text-center shadow-sm backdrop-blur">
-          <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-brand-green border-t-transparent" />
-          <p className="text-sm font-semibold text-gray-700">
-            Chargement de ta formation...
+      {/* Intro header */}
+      {!data && !loading && (
+        <div className="rounded-3xl bg-white p-6 shadow-card sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
+            Suivi personnel
           </p>
-          <p className="mt-1 text-sm text-gray-500">
-            Nous retrouvons ton parcours et ta leçon du jour.
+          <h1 className="mt-3 text-2xl font-black tracking-tight text-apple-text sm:text-3xl">
+            Retrouve ta leçon du jour
+          </h1>
+          <p className="mt-2 text-[15px] leading-relaxed text-apple-secondary">
+            Entre ton identifiant Telegram pour reprendre exactement là où tu en es.
           </p>
         </div>
       )}
 
-      {!loading && !data && !chatIdFromUrl && (
-        <section className="grid gap-4 sm:grid-cols-[1.1fr_0.9fr]">
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-[1.75rem] border border-gray-200 bg-white p-5 shadow-sm"
-          >
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-green">
-              Acces a ma formation
-            </p>
-            <h3 className="mt-2 text-xl font-bold text-brand-dark">
-              Entre ton identifiant Telegram
-            </h3>
-            <label className="mt-5 block text-sm font-semibold text-gray-700">
-              Ton identifiant
-            </label>
-            <input
-              type="text"
-              value={chatId}
-              onChange={(e) => setChatId(e.target.value)}
-              placeholder="ex: 123456789"
-              className="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green"
-            />
-            <p className="mt-3 text-xs leading-5 text-gray-500">
-              Ton identifiant se trouve dans le message reçu sur Telegram au moment
-              de l'inscription.
-            </p>
-            <button
-              type="submit"
-              disabled={loading || !chatId.trim()}
-              className="mt-5 w-full rounded-2xl bg-brand-green py-3 text-sm font-bold text-white transition hover:bg-green-800 disabled:opacity-50"
-            >
-              Voir ma formation du jour
-            </button>
-          </form>
-
-          <div className="rounded-[1.75rem] border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-cyan-50 p-5 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
-              Besoin d'aide
-            </p>
-            <h3 className="mt-2 text-xl font-bold text-brand-dark">
-              Tu n'as pas encore ton identifiant ?
-            </h3>
-            <p className="mt-3 text-sm leading-6 text-gray-600">
-              Lance d'abord ton parcours sur Telegram. Tu recevras ensuite le lien
-              ou l'identifiant qui permet de retrouver automatiquement ta leçon.
-            </p>
-            <a
-              href="https://t.me/Kompetensi12bot"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center justify-center rounded-2xl bg-brand-dark px-5 py-3 text-sm font-bold text-white transition hover:brightness-95"
-            >
-              Ouvrir le bot Telegram
-            </a>
-            <div className="mt-4 rounded-2xl bg-white/80 p-4 text-sm text-gray-600 shadow-sm">
-              Astuce: si tu ouvres ce lien depuis Telegram, l'identifiant peut être
-              transmis automatiquement dans l'URL.
-            </div>
-          </div>
-        </section>
+      {/* Loading */}
+      {loading && (
+        <div className="flex flex-col items-center py-20 text-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-[3px] border-brand-green border-t-transparent" />
+          <p className="mt-4 text-sm font-medium text-apple-secondary">
+            Chargement de ta formation…
+          </p>
+        </div>
       )}
 
+      {/* Error */}
       {erreur && (
-        <div className="rounded-[1.5rem] border border-red-200 bg-red-50 p-4">
+        <div className="rounded-3xl border border-red-100 bg-red-50 p-5">
           <p className="text-sm font-semibold text-red-700">{erreur}</p>
           <a
             href="https://t.me/Kompetensi12bot"
@@ -194,117 +113,155 @@ function MaFormationContent() {
         </div>
       )}
 
+      {/* Form */}
+      {!loading && !data && !chatIdFromUrl && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-3xl bg-white p-6 shadow-card"
+          >
+            <label className="block text-sm font-semibold text-apple-text">
+              Ton identifiant Telegram
+            </label>
+            <input
+              type="text"
+              value={chatId}
+              onChange={(e) => setChatId(e.target.value)}
+              placeholder="ex : 123456789"
+              className="mt-3 w-full rounded-2xl border border-apple-separator bg-apple-bg px-4 py-3 text-sm text-apple-text placeholder-apple-tertiary outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+            />
+            <p className="mt-2 text-xs leading-5 text-apple-tertiary">
+              Ton identifiant se trouve dans le message reçu sur Telegram à l&apos;inscription.
+            </p>
+            <button
+              type="submit"
+              disabled={loading || !chatId.trim()}
+              className="mt-5 w-full rounded-2xl bg-brand-green py-3.5 text-sm font-bold text-white transition hover:bg-green-800 disabled:opacity-40"
+            >
+              Voir ma leçon du jour
+            </button>
+          </form>
+
+          <div className="rounded-3xl bg-apple-bg p-6">
+            <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
+              Pas encore inscrit ?
+            </p>
+            <p className="mt-3 text-[15px] leading-relaxed text-apple-secondary">
+              Lance d&apos;abord ton parcours sur Telegram. Tu recevras ensuite le lien avec ton identifiant.
+            </p>
+            <a
+              href="https://t.me/Kompetensi12bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-brand-green px-5 py-3 text-sm font-bold text-white transition hover:bg-green-800"
+            >
+              Ouvrir le bot Telegram →
+            </a>
+            <p className="mt-4 text-xs text-apple-tertiary">
+              Si tu ouvres depuis Telegram, l&apos;identifiant peut être transmis automatiquement dans l&apos;URL.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Lesson data */}
       {data && (
         <div className="space-y-4">
-          <section className="relative overflow-hidden rounded-[2rem] bg-brand-green p-5 text-white shadow-xl">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,166,35,0.35),_transparent_30%),radial-gradient(circle_at_left,_rgba(255,255,255,0.12),_transparent_28%)]" />
-            <div className="relative">
-              <p className="inline-flex rounded-full bg-white/14 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-green-50">
-                {data.semaine}
-              </p>
-              <h2 className="mt-4 text-2xl font-extrabold leading-tight">
-                {data.competence}
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-green-100">
-                {data.nb_offres} offre{data.nb_offres > 1 ? 's' : ''} cette semaine.
-                Tu es actuellement au Jour {data.jour_actuel} sur 7.
-              </p>
 
-              <div className="mt-5 rounded-3xl bg-white/10 p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-3">
-                  <span className="rounded-full bg-white px-3 py-1 text-sm font-bold text-brand-green">
-                    Jour {data.jour_actuel} / 7
-                  </span>
-                  <div className="h-2 flex-1 rounded-full bg-green-900">
-                    <div
-                      className="h-2 rounded-full bg-white transition-all duration-500"
-                      style={{ width: `${(data.jour_actuel / 7) * 100}%` }}
-                    />
-                  </div>
-                  <span className="text-xs text-green-100">
-                    {data.jour_actuel === 7 ? 'Terminé' : `${7 - data.jour_actuel} jours restants`}
-                  </span>
-                </div>
-                <div className="mt-3 flex gap-1.5">
-                  {Array.from({ length: 7 }, (_, i) => (
-                    <div
-                      key={i}
-                      className={`h-1.5 flex-1 rounded-full ${
-                        i < data.jour_actuel ? 'bg-white' : 'bg-green-800'
-                      }`}
-                    />
-                  ))}
-                </div>
+          {/* Progress header */}
+          <section className="rounded-3xl bg-white p-6 shadow-card">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
+                  {data.semaine}
+                </p>
+                <h2 className="mt-2 text-2xl font-black tracking-tight text-apple-text">
+                  {data.competence}
+                </h2>
+                <p className="mt-1 text-sm text-apple-secondary">
+                  {data.nb_offres} offre{data.nb_offres > 1 ? 's' : ''} cette semaine
+                </p>
               </div>
+              <span className="shrink-0 rounded-full bg-brand-green px-3 py-1.5 text-sm font-bold text-white">
+                Jour {data.jour_actuel} / 7
+              </span>
+            </div>
+            <div className="mt-5">
+              <div className="flex gap-1">
+                {Array.from({ length: 7 }, (_, i) => (
+                  <div
+                    key={i}
+                    className={`h-1.5 flex-1 rounded-full transition-all ${
+                      i < data.jour_actuel ? 'bg-brand-green' : 'bg-apple-separator'
+                    }`}
+                  />
+                ))}
+              </div>
+              <p className="mt-2 text-xs text-apple-tertiary">
+                {data.jour_actuel === 7
+                  ? 'Formation terminée ✓'
+                  : `${7 - data.jour_actuel} jour${7 - data.jour_actuel > 1 ? 's' : ''} restant${7 - data.jour_actuel > 1 ? 's' : ''}`}
+              </p>
             </div>
           </section>
 
-          <section className="grid gap-4 sm:grid-cols-[1.12fr_0.88fr]">
-            <div className="overflow-hidden rounded-[1.75rem] border border-gray-200 bg-white shadow-sm">
-              <div className="flex items-center gap-3 border-b border-gray-100 bg-gray-50 px-4 py-3">
+          {/* Content + sidebar */}
+          <div className="grid gap-4 sm:grid-cols-[1.2fr_0.8fr]">
+
+            <section className="overflow-hidden rounded-3xl bg-white shadow-card">
+              <div className="flex items-center gap-3 border-b border-apple-separator/50 px-5 py-4">
                 <span className="text-lg">{JOUR_EMOJIS[data.jour_actuel - 1] || '📌'}</span>
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">
+                  <p className="text-sm font-bold text-apple-text">
                     Jour {data.jour_actuel} — Leçon du jour
                   </p>
-                  <p className="text-xs text-gray-500">
-                    Prends ton temps et avance à ton rythme.
-                  </p>
+                  <p className="text-xs text-apple-secondary">Prends ton temps.</p>
                 </div>
               </div>
               <div className="p-5">
                 <MarkdownContent text={data.contenu_du_jour} />
               </div>
-            </div>
+            </section>
 
             <div className="space-y-4">
-              <div className="rounded-[1.75rem] border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-5 shadow-sm">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+              <div className="rounded-3xl bg-white p-5 shadow-card">
+                <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
                   Rythme conseillé
                 </p>
-                <div className="mt-4 space-y-3">
-                  <div className="rounded-2xl bg-white/80 p-4 shadow-sm">
-                    <p className="text-sm font-semibold text-gray-800">1. Lis la leçon</p>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
-                      Consacre 20 à 30 minutes à lire calmement le contenu du jour.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl bg-white/80 p-4 shadow-sm">
-                    <p className="text-sm font-semibold text-gray-800">2. Applique une idée</p>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
-                      Essaie au moins un exercice, une action ou une réflexion concrète.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl bg-white/80 p-4 shadow-sm">
-                    <p className="text-sm font-semibold text-gray-800">3. Reviens demain</p>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
-                      La progression est pensée pour t'aider à avancer pas à pas.
-                    </p>
-                  </div>
+                <div className="mt-4 space-y-4">
+                  {[
+                    { n: '1', title: 'Lis la leçon', desc: '20–30 min, calmement.' },
+                    { n: '2', title: 'Applique une idée', desc: 'Un exercice ou une réflexion.' },
+                    { n: '3', title: 'Reviens demain', desc: 'Pas à pas.' },
+                  ].map(({ n, title, desc }) => (
+                    <div key={n} className="flex gap-3">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-apple-bg text-xs font-bold text-apple-secondary">
+                        {n}
+                      </span>
+                      <div>
+                        <p className="text-sm font-semibold text-apple-text">{title}</p>
+                        <p className="text-xs text-apple-secondary">{desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               {data.jour_actuel < 7 ? (
-                <div className="rounded-[1.75rem] border border-yellow-200 bg-yellow-50 p-5 text-center shadow-sm">
-                  <p className="text-sm font-semibold text-yellow-800">
-                    Reviens demain pour le Jour {data.jour_actuel + 1}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-yellow-700">
-                    Tu recevras un rappel ou un lien sur Telegram à 8h chaque matin.
+                <div className="rounded-3xl bg-apple-bg p-5 text-center">
+                  <p className="text-sm font-semibold text-apple-text">Reviens demain</p>
+                  <p className="mt-1 text-xs text-apple-secondary">
+                    Jour {data.jour_actuel + 1} t&apos;attendra à 8h sur Telegram.
                   </p>
                 </div>
               ) : (
-                <div className="rounded-[1.75rem] border border-green-300 bg-green-50 p-5 text-center shadow-sm">
-                  <p className="text-lg font-bold text-brand-green">
-                    🎉 Formation terminée !
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-green-700">
-                    Tu as parcouru les 7 jours de {data.competence}. Bravo pour ta constance.
-                  </p>
+                <div className="rounded-3xl bg-brand-green p-5 text-center text-white">
+                  <p className="text-lg font-black">🎉 Terminé !</p>
+                  <p className="mt-1 text-sm text-green-100">7 jours complétés. Bravo.</p>
                 </div>
               )}
             </div>
-          </section>
+          </div>
 
           <button
             onClick={() => {
@@ -313,12 +270,13 @@ function MaFormationContent() {
               setChatIdFromUrl('')
               setErreur(null)
             }}
-            className="block w-full text-center text-xs text-gray-400 transition hover:text-gray-600"
+            className="block w-full text-center text-xs text-apple-tertiary transition hover:text-apple-secondary"
           >
             Utiliser un autre identifiant
           </button>
         </div>
       )}
+
     </div>
   )
 }
