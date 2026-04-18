@@ -7,6 +7,47 @@ interface Props {
   className?: string
 }
 
+// Terms that should be auto-bolded when they appear in lesson content.
+// Negative lookbehind prevents double-bolding already-marked **text**.
+const HIGHLIGHT_TERMS = [
+  'Jour[s]?\\s+\\d+',
+  'Objectif[s]?',
+  'Leçon[s]?',
+  'Exemple[s]?\\s+complet[s]?',
+  'Exercice[s]?\\s+pratique[s]?',
+  'Auto-évaluation',
+  'Introduction',
+  'Conclusion',
+  'Résumé',
+  'Point[s]?\\s+clé[s]?',
+  'Définition[s]?',
+  'À retenir',
+  'Conseil[s]?',
+  'Important[e]?',
+  'Rappel',
+  'Mise en pratique',
+  'Pour aller plus loin',
+  'Prérequis',
+  'Étape\\s+\\d+',
+  'Résultat[s]?\\s+attendu[s]?',
+  'Compétence[s]?\\s+clé[s]?',
+  'Bonne[s]?\\s+pratique[s]?',
+  'À savoir',
+  'En pratique',
+  'Vocabulaire',
+  'Astuce[s]?',
+  'Attention',
+]
+
+const HIGHLIGHT_RE = new RegExp(
+  `(?<!\\*)(\\b(?:${HIGHLIGHT_TERMS.join('|')})\\b)(?!\\*)`,
+  'gi'
+)
+
+function autoHighlight(text: string): string {
+  return text.replace(HIGHLIGHT_RE, '**$1**')
+}
+
 function parseInline(text: string, key: number): React.ReactNode {
   const parts: React.ReactNode[] = []
   const regex = /(\*\*(.+?)\*\*)|(\*(.+?)\*)|(https?:\/\/[^\s)>\]"]+)/g
@@ -18,7 +59,7 @@ function parseInline(text: string, key: number): React.ReactNode {
       parts.push(text.slice(last, match.index))
     }
     if (match[1]) {
-      parts.push(<strong key={`b-${match.index}`} className="font-semibold">{match[2]}</strong>)
+      parts.push(<strong key={`b-${match.index}`} className="font-semibold text-gray-900">{match[2]}</strong>)
     } else if (match[3]) {
       parts.push(<em key={`i-${match.index}`}>{match[4]}</em>)
     } else if (match[5]) {
@@ -58,7 +99,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     if (line.startsWith('## ')) {
       elements.push(
         <h3 key={i} className="font-bold text-gray-900 text-base mt-6 mb-2">
-          {parseInline(line.slice(3), i)}
+          {parseInline(autoHighlight(line.slice(3)), i)}
         </h3>
       )
       i++
@@ -69,7 +110,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     if (line.startsWith('### ')) {
       elements.push(
         <h4 key={i} className="font-semibold text-gray-800 text-sm mt-5 mb-1.5">
-          {parseInline(line.slice(4), i)}
+          {parseInline(autoHighlight(line.slice(4)), i)}
         </h4>
       )
       i++
@@ -99,7 +140,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
           {items.map((item, j) => (
             <li key={j} className="flex gap-2.5 text-sm text-gray-800 leading-7">
               <span className="text-brand-green mt-1 shrink-0">•</span>
-              <span className="text-justify">{parseInline(item, j)}</span>
+              <span className="text-justify">{parseInline(autoHighlight(item), j)}</span>
             </li>
           ))}
         </ul>
@@ -120,7 +161,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
           {items.map((item, j) => (
             <li key={j} className="flex gap-2.5 text-sm text-gray-800 leading-7">
               <span className="text-brand-green font-semibold shrink-0 w-4">{startNum + j}.</span>
-              <span className="text-justify">{parseInline(item, j)}</span>
+              <span className="text-justify">{parseInline(autoHighlight(item), j)}</span>
             </li>
           ))}
         </ol>
@@ -131,7 +172,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     // Normal paragraph
     elements.push(
       <p key={i} className="text-sm text-gray-800 leading-7 text-justify">
-        {parseInline(line, i)}
+        {parseInline(autoHighlight(line), i)}
       </p>
     )
     i++
