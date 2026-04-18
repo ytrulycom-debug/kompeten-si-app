@@ -29,10 +29,11 @@ export function TubesBackground({
     const initTubes = async () => {
       if (!canvasRef.current) return
       try {
-        const cdnUrl = 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js'
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const module = await import(/* webpackIgnore: true */ cdnUrl)
+        // new Function bypasses webpack module resolution entirely — CDN URL loaded natively by the browser
+        const dynamicImport = new Function('u', 'return import(u)')
+        const module = await dynamicImport(
+          'https://cdn.jsdelivr.net/npm/threejs-components@0.0.19/build/cursors/tubes1.min.js'
+        )
         const TubesCursor = module.default
         if (!mounted) return
 
