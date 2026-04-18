@@ -38,7 +38,7 @@ export default async function FormationPage({
   params: { rang: string }
 }) {
   const rang = parseInt(params.rang)
-  if (isNaN(rang) || rang < 1 || rang > 10) notFound()
+  if (isNaN(rang) || rang < 1 || rang > 5) notFound()
 
   const data = await getData()
   if (!data || !data.competences?.length) notFound()
@@ -67,10 +67,10 @@ export default async function FormationPage({
       {/* Hero */}
       <section className="rounded-3xl bg-white p-6 shadow-card sm:p-8">
         <div className="flex items-center gap-2">
-          <span className="rounded-full bg-brand-green px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
+          <span className="rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold uppercase tracking-wider text-white">
             #{rang}
           </span>
-          <span className="text-xs font-semibold uppercase tracking-wider text-apple-tertiary">
+          <span className="text-base font-semibold uppercase tracking-wider text-apple-tertiary">
             {data.semaine}
           </span>
         </div>
@@ -80,13 +80,13 @@ export default async function FormationPage({
         </h1>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full bg-green-50 px-3 py-1.5 text-sm font-semibold text-green-800">
+          <span className="rounded-full bg-green-50 px-4 py-2 text-base font-semibold text-green-800">
             📈 {item.nb_offres} offre{item.nb_offres > 1 ? 's' : ''} cette semaine
           </span>
-          <span className="rounded-full bg-apple-bg px-3 py-1.5 text-sm text-apple-secondary">
+          <span className="rounded-full bg-apple-bg px-4 py-2 text-base text-apple-secondary">
             7 jours de formation
           </span>
-          <span className="rounded-full bg-apple-bg px-3 py-1.5 text-sm text-apple-secondary">
+          <span className="rounded-full bg-apple-bg px-4 py-2 text-base text-apple-secondary">
             Gratuit sur Telegram
           </span>
         </div>
@@ -96,13 +96,13 @@ export default async function FormationPage({
             href={telegramLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center rounded-2xl bg-brand-green px-6 py-3.5 text-sm font-bold text-white transition hover:bg-green-800"
+            className="flex items-center justify-center rounded-2xl bg-brand-green px-7 py-5 text-lg font-bold text-white shadow-md transition hover:bg-green-800"
           >
             Démarrer sur Telegram →
           </a>
           <Link
             href="/ma-formation"
-            className="flex items-center justify-center rounded-2xl bg-apple-bg px-6 py-3.5 text-sm font-semibold text-apple-text transition hover:bg-gray-200/70"
+            className="flex items-center justify-center rounded-2xl bg-apple-bg px-7 py-5 text-lg font-semibold text-apple-text transition hover:bg-gray-200/70"
           >
             Déjà inscrit ? Voir ma leçon
           </Link>
@@ -114,8 +114,8 @@ export default async function FormationPage({
         <div className="flex items-center gap-3 border-b border-apple-separator/50 pb-4">
           <span className="text-xl">{JOUR_EMOJIS[0]}</span>
           <div>
-            <p className="text-sm font-bold text-apple-text">Jour 1 / 7 — Aperçu gratuit</p>
-            <p className="text-xs text-apple-secondary">Prends une idée du contenu avant de démarrer</p>
+            <p className="text-base font-bold text-apple-text">Jour 1 / 7 — Aperçu gratuit</p>
+            <p className="text-sm text-apple-secondary">Prends une idée du contenu avant de démarrer</p>
           </div>
         </div>
         <div className="relative mt-4">
@@ -127,7 +127,7 @@ export default async function FormationPage({
             href={telegramLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-semibold text-brand-green hover:underline"
+            className="text-base font-semibold text-brand-green hover:underline"
           >
             Lire la suite et recevoir les 7 jours →
           </a>
@@ -136,21 +136,21 @@ export default async function FormationPage({
 
       {/* 7 days */}
       <section className="rounded-3xl bg-white p-6 shadow-card">
-        <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">Programme</p>
-        <h3 className="mt-2 text-lg font-bold text-apple-text">Les 7 jours du parcours</h3>
+        <p className="text-sm font-semibold uppercase tracking-widest text-apple-tertiary">Programme</p>
+        <h3 className="mt-2 text-2xl font-bold text-apple-text">Les 7 jours du parcours</h3>
         <div className="mt-4 space-y-2">
           <div className="flex items-center gap-3 rounded-2xl bg-apple-bg p-4">
-            <span className="text-lg">{JOUR_EMOJIS[0]}</span>
-            <p className="flex-1 text-sm font-semibold text-apple-text">Jour 1 / 7</p>
-            <span className="rounded-full bg-brand-green px-2.5 py-1 text-[11px] font-bold text-white">
+            <span className="text-xl">{JOUR_EMOJIS[0]}</span>
+            <p className="flex-1 text-base font-semibold text-apple-text">Jour 1 / 7</p>
+            <span className="rounded-full bg-brand-green px-3 py-1 text-xs font-bold text-white">
               Gratuit
             </span>
           </div>
           {[1, 2, 3, 4, 5, 6].map((idx) => (
             <div key={idx} className="flex items-center gap-3 rounded-2xl bg-apple-bg p-4 opacity-55">
-              <span className="text-lg">{JOUR_EMOJIS[idx]}</span>
-              <p className="flex-1 text-sm font-semibold text-apple-text">Jour {idx + 1} / 7</p>
-              <span className="text-xs text-apple-tertiary">🔒 Via Telegram</span>
+              <span className="text-xl">{JOUR_EMOJIS[idx]}</span>
+              <p className="flex-1 text-base font-semibold text-apple-text">Jour {idx + 1} / 7</p>
+              <span className="text-sm text-apple-tertiary">🔒 Via Telegram</span>
             </div>
           ))}
         </div>
@@ -158,13 +158,13 @@ export default async function FormationPage({
 
       {/* Final CTA */}
       <section className="rounded-3xl bg-brand-green p-6 text-center text-white sm:p-8">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-green-300">
+        <p className="text-sm font-semibold uppercase tracking-widest text-green-300">
           Passage à l'action
         </p>
         <h3 className="mt-3 text-2xl font-black tracking-tight">
           Reçois tes 7 leçons sur Telegram
         </h3>
-        <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-green-100">
+        <p className="mx-auto mt-3 max-w-sm text-lg leading-relaxed text-green-100">
           Appuie sur le bouton, puis sur{' '}
           <strong className="text-white">Start</strong> dans Telegram.
           Ton parcours démarre automatiquement. Une leçon par matin.
@@ -173,11 +173,11 @@ export default async function FormationPage({
           href={telegramLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-bold text-brand-green transition hover:bg-green-50"
+          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-7 py-5 text-lg font-bold text-brand-green shadow-md transition hover:bg-green-50"
         >
           Démarrer gratuitement →
         </a>
-        <p className="mt-3 text-xs text-green-200">Aucun compte nécessaire · Gratuit</p>
+        <p className="mt-3 text-base text-green-200">Aucun compte nécessaire · Gratuit</p>
       </section>
 
       <Link

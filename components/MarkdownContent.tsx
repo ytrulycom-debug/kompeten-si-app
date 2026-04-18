@@ -98,7 +98,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     // ## Heading 2
     if (line.startsWith('## ')) {
       elements.push(
-        <h3 key={i} className="font-bold text-gray-900 text-base mt-6 mb-2">
+        <h3 key={i} className="font-bold text-gray-900 text-lg mt-6 mb-2">
           {parseInline(autoHighlight(line.slice(3)), i)}
         </h3>
       )
@@ -109,7 +109,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     // ### Heading 3
     if (line.startsWith('### ')) {
       elements.push(
-        <h4 key={i} className="font-semibold text-gray-800 text-sm mt-5 mb-1.5">
+        <h4 key={i} className="font-semibold text-gray-800 text-base mt-5 mb-1.5">
           {parseInline(autoHighlight(line.slice(4)), i)}
         </h4>
       )
@@ -120,7 +120,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     // **Titre :** seul sur une ligne
     if (/^\*\*[^*]+\*\*\s*:?\s*$/.test(line.trim())) {
       elements.push(
-        <h4 key={i} className="font-bold text-gray-900 text-sm mt-6 mb-2">
+        <h4 key={i} className="font-bold text-gray-900 text-base mt-6 mb-2">
           {parseInline(line.trim().replace(/^\*\*|\*\*\s*:?\s*$/g, ''), i)}
         </h4>
       )
@@ -138,7 +138,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       elements.push(
         <ul key={`ul-${i}`} className="space-y-2.5 my-3 pl-1">
           {items.map((item, j) => (
-            <li key={j} className="flex gap-2.5 text-sm text-gray-800 leading-7">
+            <li key={j} className="flex gap-2.5 text-base text-gray-800 leading-7">
               <span className="text-brand-green mt-1 shrink-0">•</span>
               <span className="text-justify">{parseInline(autoHighlight(item), j)}</span>
             </li>
@@ -159,7 +159,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       elements.push(
         <ol key={`ol-${i}`} className="space-y-2.5 my-3 pl-1" start={startNum}>
           {items.map((item, j) => (
-            <li key={j} className="flex gap-2.5 text-sm text-gray-800 leading-7">
+            <li key={j} className="flex gap-2.5 text-base text-gray-800 leading-7">
               <span className="text-brand-green font-semibold shrink-0 w-4">{startNum + j}.</span>
               <span className="text-justify">{parseInline(autoHighlight(item), j)}</span>
             </li>
@@ -171,7 +171,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
 
     // Normal paragraph
     elements.push(
-      <p key={i} className="text-sm text-gray-800 leading-7 text-justify">
+      <p key={i} className="text-base text-gray-800 leading-7 text-justify">
         {parseInline(autoHighlight(line), i)}
       </p>
     )

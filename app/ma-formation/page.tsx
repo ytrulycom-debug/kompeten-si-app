@@ -73,16 +73,16 @@ function MaFormationContent() {
         ← Retour
       </Link>
 
-      {/* Intro header */}
+      {/* Intro header — visible only before data loads */}
       {!data && !loading && (
         <div className="rounded-3xl bg-white p-6 shadow-card sm:p-8">
-          <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
+          <p className="text-sm font-semibold uppercase tracking-widest text-apple-tertiary">
             Suivi personnel
           </p>
           <h1 className="mt-3 text-2xl font-black tracking-tight text-apple-text sm:text-3xl">
             Retrouve ta leçon du jour
           </h1>
-          <p className="mt-2 text-[15px] leading-relaxed text-apple-secondary">
+          <p className="mt-2 text-lg leading-relaxed text-apple-secondary">
             Entre ton identifiant Telegram pour reprendre exactement là où tu en es.
           </p>
         </div>
@@ -113,14 +113,14 @@ function MaFormationContent() {
         </div>
       )}
 
-      {/* Form */}
+      {/* Form — when no URL param */}
       {!loading && !data && !chatIdFromUrl && (
         <div className="grid gap-4 sm:grid-cols-2">
           <form
             onSubmit={handleSubmit}
             className="rounded-3xl bg-white p-6 shadow-card"
           >
-            <label className="block text-sm font-semibold text-apple-text">
+            <label className="block text-base font-semibold text-apple-text">
               Ton identifiant Telegram
             </label>
             <input
@@ -128,32 +128,32 @@ function MaFormationContent() {
               value={chatId}
               onChange={(e) => setChatId(e.target.value)}
               placeholder="ex : 123456789"
-              className="mt-3 w-full rounded-2xl border border-apple-separator bg-apple-bg px-4 py-3 text-sm text-apple-text placeholder-apple-tertiary outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
+              className="mt-3 w-full rounded-2xl border border-apple-separator bg-apple-bg px-4 py-3.5 text-base text-apple-text placeholder-apple-tertiary outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
             />
-            <p className="mt-2 text-xs leading-5 text-apple-tertiary">
+            <p className="mt-2 text-base leading-6 text-apple-tertiary">
               Ton identifiant se trouve dans le message reçu sur Telegram à l&apos;inscription.
             </p>
             <button
               type="submit"
               disabled={loading || !chatId.trim()}
-              className="mt-5 w-full rounded-2xl bg-brand-green py-3.5 text-sm font-bold text-white transition hover:bg-green-800 disabled:opacity-40"
+              className="mt-5 w-full rounded-2xl bg-brand-green py-4 text-lg font-bold text-white shadow-md transition hover:bg-green-800 disabled:opacity-40"
             >
               Voir ma leçon du jour
             </button>
           </form>
 
           <div className="rounded-3xl bg-apple-bg p-6">
-            <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
+            <p className="text-sm font-semibold uppercase tracking-widest text-apple-tertiary">
               Pas encore inscrit ?
             </p>
-            <p className="mt-3 text-[15px] leading-relaxed text-apple-secondary">
+            <p className="mt-3 text-lg leading-relaxed text-apple-secondary">
               Lance d&apos;abord ton parcours sur Telegram. Tu recevras ensuite le lien avec ton identifiant.
             </p>
             <a
               href="https://t.me/Kompetensi12bot"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-brand-green px-5 py-3 text-sm font-bold text-white transition hover:bg-green-800"
+              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-brand-green px-6 py-4 text-lg font-bold text-white shadow-md transition hover:bg-green-800"
             >
               Ouvrir le bot Telegram →
             </a>
@@ -172,13 +172,13 @@ function MaFormationContent() {
           <section className="rounded-3xl bg-white p-6 shadow-card">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
+                <p className="text-sm font-semibold uppercase tracking-widest text-apple-tertiary">
                   {data.semaine}
                 </p>
                 <h2 className="mt-2 text-2xl font-black tracking-tight text-apple-text">
                   {data.competence}
                 </h2>
-                <p className="mt-1 text-sm text-apple-secondary">
+                <p className="mt-1 text-base text-apple-secondary">
                   {data.nb_offres} offre{data.nb_offres > 1 ? 's' : ''} cette semaine
                 </p>
               </div>
@@ -208,6 +208,7 @@ function MaFormationContent() {
           {/* Content + sidebar */}
           <div className="grid gap-4 sm:grid-cols-[1.2fr_0.8fr]">
 
+            {/* Lesson */}
             <section className="overflow-hidden rounded-3xl bg-white shadow-card">
               <div className="flex items-center gap-3 border-b border-apple-separator/50 px-5 py-4">
                 <span className="text-lg">{JOUR_EMOJIS[data.jour_actuel - 1] || '📌'}</span>
@@ -223,6 +224,7 @@ function MaFormationContent() {
               </div>
             </section>
 
+            {/* Sidebar */}
             <div className="space-y-4">
               <div className="rounded-3xl bg-white p-5 shadow-card">
                 <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">
@@ -239,8 +241,8 @@ function MaFormationContent() {
                         {n}
                       </span>
                       <div>
-                        <p className="text-sm font-semibold text-apple-text">{title}</p>
-                        <p className="text-xs text-apple-secondary">{desc}</p>
+                        <p className="text-base font-semibold text-apple-text">{title}</p>
+                        <p className="text-sm text-apple-secondary">{desc}</p>
                       </div>
                     </div>
                   ))}
@@ -249,15 +251,19 @@ function MaFormationContent() {
 
               {data.jour_actuel < 7 ? (
                 <div className="rounded-3xl bg-apple-bg p-5 text-center">
-                  <p className="text-sm font-semibold text-apple-text">Reviens demain</p>
-                  <p className="mt-1 text-xs text-apple-secondary">
+                  <p className="text-base font-semibold text-apple-text">
+                    Reviens demain
+                  </p>
+                  <p className="mt-1 text-sm text-apple-secondary">
                     Jour {data.jour_actuel + 1} t&apos;attendra à 8h sur Telegram.
                   </p>
                 </div>
               ) : (
                 <div className="rounded-3xl bg-brand-green p-5 text-center text-white">
                   <p className="text-lg font-black">🎉 Terminé !</p>
-                  <p className="mt-1 text-sm text-green-100">7 jours complétés. Bravo.</p>
+                  <p className="mt-1 text-sm text-green-100">
+                    7 jours complétés. Bravo.
+                  </p>
                 </div>
               )}
             </div>

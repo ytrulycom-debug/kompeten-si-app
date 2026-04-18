@@ -24,18 +24,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr">
       <body className="min-h-screen bg-apple-bg text-apple-text">
         <header className="sticky top-0 z-50 border-b border-apple-separator/60 bg-white/85 backdrop-blur-xl">
-          <div className="mx-auto flex h-14 max-w-2xl items-center justify-between px-5">
+          <div className="mx-auto flex h-16 max-w-2xl items-center justify-between px-5">
             <Link href="/" className="flex items-center gap-2.5">
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-green text-sm font-black text-white leading-none">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-green text-base font-black text-white leading-none">
                 K
               </span>
-              <span className="text-[15px] font-bold tracking-tight text-apple-text">
+              <span className="text-[17px] font-bold tracking-tight text-apple-text">
                 KompetenSI
               </span>
             </Link>
             <Link
               href="/ma-formation"
-              className="rounded-xl bg-apple-bg px-3.5 py-1.5 text-sm font-semibold text-brand-green transition hover:bg-gray-200/70"
+              className="rounded-xl bg-apple-bg px-4 py-2 text-base font-semibold text-brand-green transition hover:bg-gray-200/70"
             >
               Ma formation
             </Link>
