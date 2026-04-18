@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </div>
         </header>
-        <main className="mx-auto max-w-2xl px-5 py-8">
+        <main className="mx-auto max-w-2xl px-5 py-4">
           {children}
         </main>
         <footer className="pb-10 pt-4 text-center">

@@ -54,50 +54,47 @@ export default async function HomePage() {
   const others = data.competences.slice(1)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
 
       {/* Week badge */}
       <div className="text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-brand-green/20 bg-white px-4 py-2 text-sm font-semibold uppercase tracking-widest text-brand-green shadow-sm">
+        <span className="inline-flex items-center gap-2 rounded-full border border-brand-green/20 bg-white px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-brand-green shadow-sm">
           📅 {data.semaine || 'Cette semaine'}
         </span>
-        <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-          Les compétences les plus<br className="hidden sm:block" /> demandées cette semaine
+        <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+          Les compétences les plus demandées cette semaine
         </h2>
-        <p className="mx-auto mt-3 max-w-md text-base leading-7 text-gray-500">
-          KompetenSI transforme les tendances du marché en parcours simples de 7 jours pour passer à l'action.
-        </p>
       </div>
 
       {/* Hero card — #1 compétence */}
       <Link
         href={`/formation/${hero.rang}`}
-        className="group block rounded-[2rem] border border-white/80 bg-white/90 p-6 shadow-xl shadow-gray-200/60 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gray-200/80 sm:p-8"
+        className="group block rounded-[2rem] border border-white/80 bg-white/90 p-5 shadow-xl shadow-gray-200/60 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gray-200/80"
       >
         <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold uppercase tracking-wider text-white">
           🏆 Plus forte traction
         </span>
 
-        <h3 className="mt-5 text-2xl font-extrabold leading-snug tracking-tight text-gray-900 sm:text-3xl">
+        <h3 className="mt-3 text-2xl font-extrabold leading-snug tracking-tight text-gray-900 sm:text-3xl">
           {hero.competence}
         </h3>
 
-        <div className="mt-4 flex flex-wrap gap-3">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-4 py-2 text-base font-semibold text-green-800">
+        <div className="mt-3 flex flex-wrap gap-2">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1.5 text-sm font-semibold text-green-800">
             📈 {hero.nb_offres} offre{hero.nb_offres > 1 ? 's' : ''} cette semaine
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-4 py-2 text-base font-medium text-gray-600">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
             📘 Jour 1 gratuit
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-4 py-2 text-base font-medium text-gray-600">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
             ⏱️ 7 leçons courtes
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-4 py-2 text-base font-medium text-gray-600">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
             📨 Envoi sur Telegram
           </span>
         </div>
 
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-4 flex items-center gap-3">
           <span className="rounded-xl bg-brand-green px-7 py-4 text-lg font-bold text-white shadow-md transition group-hover:bg-green-800">
             Commencer le parcours →
           </span>
