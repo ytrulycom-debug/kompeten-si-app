@@ -16,12 +16,6 @@ interface ApiData {
   error?: string
 }
 
-const PROGRAM_BENEFITS = [
-  'Une leçon courte chaque matin pendant 7 jours',
-  'Des exemples concrets et faciles à appliquer',
-  'Un rythme léger pour progresser sans te perdre',
-]
-
 const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
 
 export const dynamic = 'force-dynamic'
@@ -62,177 +56,137 @@ export default async function FormationPage({
 
   return (
     <div className="space-y-5">
+
       <Link
         href="/"
-        className="inline-flex items-center gap-1 text-sm font-medium text-brand-green hover:underline"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-apple-secondary transition hover:text-apple-text"
       >
-        ← Retour au classement
+        ← Retour
       </Link>
 
-      <section className="relative overflow-hidden rounded-[2rem] bg-brand-green p-5 text-white shadow-xl">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(245,166,35,0.35),_transparent_30%),radial-gradient(circle_at_left,_rgba(255,255,255,0.12),_transparent_28%)]" />
-        <div className="relative">
-          <p className="inline-flex rounded-full bg-white/14 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-green-50">
-            Micro-formation #{rang} · {data.semaine}
-          </p>
-          <h2 className="mt-4 text-2xl font-extrabold leading-tight">
-            {item.competence}
-          </h2>
-          <p className="mt-2 text-sm leading-6 text-green-100">
-            {item.nb_offres} offre{item.nb_offres > 1 ? 's' : ''} cette semaine.
-            Tu peux commencer ici avec un aperçu gratuit du Jour 1, puis recevoir
-            la suite sur Telegram.
-          </p>
-          <div className="mt-5 grid gap-3 rounded-3xl bg-white/10 p-4 backdrop-blur-sm sm:grid-cols-3">
-            {PROGRAM_BENEFITS.map((benefit) => (
-              <p key={benefit} className="text-sm leading-6 text-green-50">
-                {benefit}
-              </p>
-            ))}
-          </div>
+      {/* Hero */}
+      <section className="rounded-3xl bg-white p-6 shadow-card sm:p-8">
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-brand-green px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white">
+            #{rang}
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-apple-tertiary">
+            {data.semaine}
+          </span>
+        </div>
+
+        <h1 className="mt-4 text-[28px] font-black leading-tight tracking-tight text-apple-text sm:text-[34px]">
+          {item.competence}
+        </h1>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          <span className="rounded-full bg-green-50 px-3 py-1.5 text-sm font-semibold text-green-800">
+            📈 {item.nb_offres} offre{item.nb_offres > 1 ? 's' : ''} cette semaine
+          </span>
+          <span className="rounded-full bg-apple-bg px-3 py-1.5 text-sm text-apple-secondary">
+            7 jours de formation
+          </span>
+          <span className="rounded-full bg-apple-bg px-3 py-1.5 text-sm text-apple-secondary">
+            Gratuit sur Telegram
+          </span>
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a
             href={telegramLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center justify-center rounded-2xl bg-amber-400 px-5 py-3 text-sm font-bold text-brand-dark transition hover:brightness-95"
+            className="flex items-center justify-center rounded-2xl bg-brand-green px-6 py-3.5 text-sm font-bold text-white transition hover:bg-green-800"
           >
-            Démarrer sur Telegram
+            Démarrer sur Telegram →
+          </a>
+          <Link
+            href="/ma-formation"
+            className="flex items-center justify-center rounded-2xl bg-apple-bg px-6 py-3.5 text-sm font-semibold text-apple-text transition hover:bg-gray-200/70"
+          >
+            Déjà inscrit ? Voir ma leçon
+          </Link>
+        </div>
+      </section>
+
+      {/* Teaser day 1 */}
+      <section className="rounded-3xl bg-white p-6 shadow-card">
+        <div className="flex items-center gap-3 border-b border-apple-separator/50 pb-4">
+          <span className="text-xl">{JOUR_EMOJIS[0]}</span>
+          <div>
+            <p className="text-sm font-bold text-apple-text">Jour 1 / 7 — Aperçu gratuit</p>
+            <p className="text-xs text-apple-secondary">Prends une idée du contenu avant de démarrer</p>
+          </div>
+        </div>
+        <div className="relative mt-4">
+          <MarkdownContent text={teaserLines} />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent" />
+        </div>
+        <div className="pt-4 text-center">
+          <a
+            href={telegramLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-semibold text-brand-green hover:underline"
+          >
+            Lire la suite et recevoir les 7 jours →
           </a>
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
-        <div className="rounded-[1.75rem] border border-gray-200 bg-white p-5 shadow-sm">
-          <div className="flex items-center gap-3 border-b border-gray-100 pb-3">
+      {/* 7 days */}
+      <section className="rounded-3xl bg-white p-6 shadow-card">
+        <p className="text-xs font-semibold uppercase tracking-widest text-apple-tertiary">Programme</p>
+        <h3 className="mt-2 text-lg font-bold text-apple-text">Les 7 jours du parcours</h3>
+        <div className="mt-4 space-y-2">
+          <div className="flex items-center gap-3 rounded-2xl bg-apple-bg p-4">
             <span className="text-lg">{JOUR_EMOJIS[0]}</span>
-            <div>
-              <p className="text-sm font-semibold text-gray-800">Jour 1 / 7</p>
-              <p className="text-xs text-gray-500">Aperçu gratuit</p>
-            </div>
+            <p className="flex-1 text-sm font-semibold text-apple-text">Jour 1 / 7</p>
+            <span className="rounded-full bg-brand-green px-2.5 py-1 text-[11px] font-bold text-white">
+              Gratuit
+            </span>
           </div>
-          <div className="relative pt-4">
-            <MarkdownContent text={teaserLines} />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white via-white/90 to-transparent" />
-          </div>
-          <div className="pt-4 text-center">
-            <a
-              href={telegramLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-xl bg-brand-green px-5 py-2.5 text-sm font-bold text-white transition hover:bg-green-800"
-            >
-              Lire la suite + recevoir les 7 jours
-            </a>
-          </div>
-        </div>
-
-        <div className="rounded-[1.75rem] border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-5 shadow-sm">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
-            Ce que tu vas recevoir
-          </p>
-          <div className="mt-4 space-y-3">
-            {PROGRAM_BENEFITS.map((benefit, index) => (
-              <div
-                key={benefit}
-                className="flex gap-3 rounded-2xl bg-white/80 p-3 shadow-sm"
-              >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-amber-400 text-sm font-bold text-white">
-                  {index + 1}
-                </span>
-                <p className="text-sm leading-6 text-gray-700">{benefit}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 rounded-2xl bg-brand-dark px-4 py-3 text-sm text-slate-200">
-            Tu reçois une progression guidée, pas un gros bloc difficile à suivre.
-          </div>
-        </div>
-      </section>
-
-      <section className="rounded-[1.75rem] border border-gray-200 bg-white p-5 shadow-sm">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-green">
-              Programme complet
-            </p>
-            <h3 className="mt-1 text-xl font-bold text-brand-dark">
-              Les 7 jours du parcours
-            </h3>
-          </div>
-          <span className="rounded-full bg-brand-light px-3 py-1 text-xs font-semibold text-brand-green">
-            Déblocage via Telegram
-          </span>
-        </div>
-        <div className="mt-4 grid gap-2">
           {[1, 2, 3, 4, 5, 6].map((idx) => (
-            <div
-              key={idx}
-              className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-gray-50 p-4"
-            >
+            <div key={idx} className="flex items-center gap-3 rounded-2xl bg-apple-bg p-4 opacity-55">
               <span className="text-lg">{JOUR_EMOJIS[idx]}</span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-gray-700">
-                  Jour {idx + 1} / 7
-                </p>
-                <p className="text-xs text-gray-500">
-                  Débloqué automatiquement après ton inscription.
-                </p>
-              </div>
-              <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-gray-500">
-                🔒 Verrouillé
-              </span>
+              <p className="flex-1 text-sm font-semibold text-apple-text">Jour {idx + 1} / 7</p>
+              <span className="text-xs text-apple-tertiary">🔒 Via Telegram</span>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="rounded-[1.75rem] bg-brand-dark p-5 text-center text-white shadow-lg">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+      {/* Final CTA */}
+      <section className="rounded-3xl bg-brand-green p-6 text-center text-white sm:p-8">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-green-300">
           Passage à l'action
         </p>
-        <p className="mt-2 text-2xl font-bold">Reçois la suite sur Telegram</p>
-        <p className="mt-3 text-sm leading-6 text-slate-300">
-          Appuie sur le bouton, puis sur <strong className="text-white">Start</strong>{' '}
-          dans Telegram. Ton parcours démarre automatiquement.
+        <h3 className="mt-3 text-2xl font-black tracking-tight">
+          Reçois tes 7 leçons sur Telegram
+        </h3>
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-green-100">
+          Appuie sur le bouton, puis sur{' '}
+          <strong className="text-white">Start</strong> dans Telegram.
+          Ton parcours démarre automatiquement. Une leçon par matin.
         </p>
         <a
           href={telegramLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-block rounded-2xl bg-amber-400 px-6 py-3 text-sm font-bold text-brand-dark transition hover:brightness-95"
+          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-sm font-bold text-brand-green transition hover:bg-green-50"
         >
-          Démarrer ma formation gratuitement
+          Démarrer gratuitement →
         </a>
-        <p className="mt-3 text-xs text-slate-400">
-          Une nouvelle leçon arrive chaque matin à 8h.
-        </p>
+        <p className="mt-3 text-xs text-green-200">Aucun compte nécessaire · Gratuit</p>
       </section>
-
-      <div className="text-center">
-        <Link
-          href="/ma-formation"
-          className="text-sm font-medium text-brand-green hover:underline"
-        >
-          Tu es déjà inscrit ? → Voir ta leçon du jour
-        </Link>
-      </div>
-
-      <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-4 text-center">
-        <p className="text-sm font-medium text-yellow-800">
-          💪 7 jours pour transformer ta carrière !
-        </p>
-        <p className="mt-1 text-xs text-yellow-600">
-          Consacre 30 minutes par jour à cette formation pour maîtriser{' '}
-          {item.competence}.
-        </p>
-      </div>
 
       <Link
         href="/"
-        className="block text-center text-sm text-brand-green hover:underline"
+        className="block text-center text-sm text-apple-secondary transition hover:text-apple-text"
       >
-        ← Voir les autres compétences de la semaine
+        ← Voir toutes les compétences de la semaine
       </Link>
+
     </div>
   )
 }
