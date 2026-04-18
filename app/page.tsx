@@ -54,7 +54,7 @@ export default async function HomePage() {
   const others = data.competences.slice(1)
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-6">
 
       {/* Week badge */}
       <div className="text-center">
