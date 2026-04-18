@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import FadeUp from '@/components/FadeUp'
+import { StaggerGrid, StaggerItem } from '@/components/StaggerGrid'
 
 interface Competence {
   rang: number
@@ -56,125 +58,131 @@ export default async function HomePage() {
   return (
     <div className="space-y-4">
 
-      {/* Week badge */}
-      <div className="text-center">
-        <span className="inline-flex items-center gap-2 rounded-full border border-brand-green/20 bg-white px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-brand-green shadow-sm">
-          📅 {data.semaine || 'Cette semaine'}
-        </span>
-        <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-          Les compétences les plus demandées cette semaine
-        </h2>
-      </div>
-
-      {/* Hero card — #1 compétence */}
-      <Link
-        href={`/formation/${hero.rang}`}
-        className="group block rounded-[2rem] border border-white/80 bg-white/90 p-5 shadow-xl shadow-gray-200/60 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gray-200/80"
-      >
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold uppercase tracking-wider text-white">
-          🏆 Plus forte traction
-        </span>
-
-        <h3 className="mt-3 text-2xl font-extrabold leading-snug tracking-tight text-gray-900 sm:text-3xl">
-          {hero.competence}
-        </h3>
-
-        <div className="mt-3 flex flex-wrap gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1.5 text-sm font-semibold text-green-800">
-            📈 {hero.nb_offres} offre{hero.nb_offres > 1 ? 's' : ''} cette semaine
+      <FadeUp delay={0}>
+        <div className="text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-brand-green/20 bg-white px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-brand-green shadow-sm">
+            📅 {data.semaine || 'Cette semaine'}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
-            📘 Jour 1 gratuit
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
-            ⏱️ 7 leçons courtes
-          </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
-            📨 Envoi sur Telegram
-          </span>
+          <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+            Les compétences les plus demandées cette semaine
+          </h2>
         </div>
+      </FadeUp>
 
-        <div className="mt-4 flex items-center gap-3">
-          <span className="rounded-xl bg-brand-green px-7 py-4 text-lg font-bold text-white shadow-md transition group-hover:bg-green-800">
-            Commencer le parcours →
+      <FadeUp delay={0.1}>
+        <Link
+          href={`/formation/${hero.rang}`}
+          className="group block rounded-[2rem] border border-white/80 bg-white/90 p-5 shadow-xl shadow-gray-200/60 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gray-200/80"
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold uppercase tracking-wider text-white">
+            🏆 Plus forte traction
           </span>
-        </div>
-      </Link>
 
-      {/* Other skills grid */}
+          <h3 className="mt-3 text-2xl font-extrabold leading-snug tracking-tight text-gray-900 sm:text-3xl">
+            {hero.competence}
+          </h3>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1.5 text-sm font-semibold text-green-800">
+              📈 {hero.nb_offres} offre{hero.nb_offres > 1 ? 's' : ''} cette semaine
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
+              📘 Jour 1 gratuit
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
+              ⏱️ 7 leçons courtes
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
+              📨 Envoi sur Telegram
+            </span>
+          </div>
+
+          <div className="mt-4 flex items-center gap-3">
+            <span className="rounded-xl bg-brand-green px-7 py-4 text-lg font-bold text-white shadow-md transition group-hover:bg-green-800">
+              Commencer le parcours →
+            </span>
+          </div>
+        </Link>
+      </FadeUp>
+
       {others.length > 0 && (
-        <section>
-          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-gray-400">
-            Autres compétences porteuses
+        <FadeUp delay={0.05}>
+          <section>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-gray-400">
+              Autres compétences porteuses
+            </p>
+            <StaggerGrid className="grid gap-4 sm:grid-cols-2">
+              {others.map((item) => (
+                <StaggerItem key={item.rang}>
+                  <Link
+                    href={`/formation/${item.rang}`}
+                    className="group flex flex-col rounded-[1.5rem] border border-gray-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-green/20 hover:shadow-md"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-bold uppercase tracking-widest text-gray-400">
+                          #{item.rang}
+                        </p>
+                        <p className="mt-1.5 text-xl font-bold leading-snug text-gray-900">
+                          {item.competence}
+                        </p>
+                        <p className="mt-1 text-base font-medium text-brand-green">
+                          {item.nb_offres} offre{item.nb_offres > 1 ? 's' : ''} repérée{item.nb_offres > 1 ? 's' : ''}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between gap-3">
+                      <div className="flex flex-wrap gap-1.5 text-base text-gray-400">
+                        <span className="rounded-full bg-gray-50 px-3 py-1.5">📘 Jour 1 gratuit</span>
+                        <span className="rounded-full bg-gray-50 px-3 py-1.5">7 leçons</span>
+                      </div>
+                      <span className="shrink-0 rounded-xl bg-brand-green px-5 py-2.5 text-base font-bold text-white transition group-hover:bg-green-800">
+                        Voir →
+                      </span>
+                    </div>
+                  </Link>
+                </StaggerItem>
+              ))}
+            </StaggerGrid>
+          </section>
+        </FadeUp>
+      )}
+
+      <FadeUp>
+        <section className="rounded-[1.75rem] border border-brand-green/10 bg-green-50/60 p-6 text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">Pourquoi Telegram</p>
+          <h3 className="mt-2 text-xl font-bold text-gray-900">
+            Tu continues ta formation là où tu es déjà actif
+          </h3>
+          <p className="mx-auto mt-3 max-w-md text-base leading-7 text-gray-600">
+            Pas besoin de créer un compte compliqué. Tu choisis une compétence ici, puis tu reçois chaque matin une leçon directement sur Telegram.
           </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {others.map((item) => (
-              <Link
-                key={item.rang}
-                href={`/formation/${item.rang}`}
-                className="group flex flex-col rounded-[1.5rem] border border-gray-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-green/20 hover:shadow-md"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-bold uppercase tracking-widest text-gray-400">
-                      #{item.rang}
-                    </p>
-                    <p className="mt-1.5 text-xl font-bold leading-snug text-gray-900">
-                      {item.competence}
-                    </p>
-                    <p className="mt-1 text-base font-medium text-brand-green">
-                      {item.nb_offres} offre{item.nb_offres > 1 ? 's' : ''} repérée{item.nb_offres > 1 ? 's' : ''}
-                    </p>
-                  </div>
-                </div>
-                <div className="mt-4 flex items-center justify-between gap-3">
-                  <div className="flex flex-wrap gap-1.5 text-base text-gray-400">
-                    <span className="rounded-full bg-gray-50 px-3 py-1.5">📘 Jour 1 gratuit</span>
-                    <span className="rounded-full bg-gray-50 px-3 py-1.5">7 leçons</span>
-                  </div>
-                  <span className="shrink-0 rounded-xl bg-brand-green px-5 py-2.5 text-base font-bold text-white transition group-hover:bg-green-800">
-                    Voir →
-                  </span>
-                </div>
-              </Link>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            {['📖 Leçons courtes', '📱 Adapté mobile', '⏰ Rythme quotidien', '🆓 Gratuit'].map((f) => (
+              <span key={f} className="rounded-full bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm">
+                {f}
+              </span>
             ))}
           </div>
         </section>
-      )}
+      </FadeUp>
 
-      {/* Why Telegram */}
-      <section className="rounded-[1.75rem] border border-brand-green/10 bg-green-50/60 p-6 text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">Pourquoi Telegram</p>
-        <h3 className="mt-2 text-xl font-bold text-gray-900">
-          Tu continues ta formation là où tu es déjà actif
-        </h3>
-        <p className="mx-auto mt-3 max-w-md text-base leading-7 text-gray-600">
-          Pas besoin de créer un compte compliqué. Tu choisis une compétence ici, puis tu reçois chaque matin une leçon directement sur Telegram.
-        </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
-          {['📖 Leçons courtes', '📱 Adapté mobile', '⏰ Rythme quotidien', '🆓 Gratuit'].map((f) => (
-            <span key={f} className="rounded-full bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm">
-              {f}
-            </span>
-          ))}
+      <FadeUp>
+        <div className="rounded-[1.5rem] border border-dashed border-brand-green/20 bg-white/70 px-5 py-6 text-center">
+          <p className="text-sm font-semibold text-gray-800">
+            Tu n&apos;as pas besoin de tout apprendre d&apos;un coup.
+          </p>
+          <p className="mt-1 text-base text-gray-500">
+            Choisis une compétence utile, commence par le Jour 1, puis avance un peu chaque matin.
+          </p>
+          <Link
+            href="/formation/1"
+            className="mt-4 inline-flex items-center justify-center rounded-2xl border border-brand-green/30 px-6 py-3 text-base font-semibold text-brand-green transition hover:bg-brand-green hover:text-white"
+          >
+            Voir la compétence n°1
+          </Link>
         </div>
-      </section>
-
-      {/* Footer CTA */}
-      <div className="rounded-[1.5rem] border border-dashed border-brand-green/20 bg-white/70 px-5 py-6 text-center">
-        <p className="text-sm font-semibold text-gray-800">
-          Tu n'as pas besoin de tout apprendre d'un coup.
-        </p>
-        <p className="mt-1 text-base text-gray-500">
-          Choisis une compétence utile, commence par le Jour 1, puis avance un peu chaque matin.
-        </p>
-        <Link
-          href="/formation/1"
-          className="mt-4 inline-flex items-center justify-center rounded-2xl border border-brand-green/30 px-6 py-3 text-base font-semibold text-brand-green transition hover:bg-brand-green hover:text-white"
-        >
-          Voir la compétence n°1
-        </Link>
-      </div>
+      </FadeUp>
 
     </div>
   )
