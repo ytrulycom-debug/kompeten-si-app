@@ -95,7 +95,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
           {items.map((item, j) => (
             <li key={j} className="flex gap-2 text-sm text-gray-800 leading-relaxed">
               <span className="text-brand-green mt-0.5 shrink-0">•</span>
-              <span>{parseInline(item, j)}</span>
+              <span className="text-justify">{parseInline(item, j)}</span>
             </li>
           ))}
         </ul>
@@ -115,7 +115,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
           {items.map((item, j) => (
             <li key={j} className="flex gap-2 text-sm text-gray-800 leading-relaxed">
               <span className="text-brand-green font-semibold shrink-0 w-4">{startNum + j}.</span>
-              <span>{parseInline(item, j)}</span>
+              <span className="text-justify">{parseInline(item, j)}</span>
             </li>
           ))}
         </ol>
@@ -124,7 +124,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     }
 
     elements.push(
-      <p key={i} className="text-sm text-gray-800 leading-relaxed">
+      <p key={i} className="text-sm text-gray-800 leading-relaxed text-justify">
         {parseInline(line, i)}
       </p>
     )
