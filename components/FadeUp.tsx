@@ -14,7 +14,7 @@ export default function FadeUp({ children, delay = 0, className }: Props) {
       initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1], delay }}
+      transition={{ duration: 0.55, ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number], delay }}
       className={className}
     >
       {children}
