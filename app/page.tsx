@@ -58,7 +58,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-4">
 
-      <FadeUp delay={0}>
+      <FadeUp delay={0.05}>
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-green/20 bg-white px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-brand-green shadow-sm">
             📅 {data.semaine || 'Cette semaine'}
@@ -69,7 +69,7 @@ export default async function HomePage() {
         </div>
       </FadeUp>
 
-      <FadeUp delay={0.1}>
+      <FadeUp delay={0.25}>
         <Link
           href={`/formation/${hero.rang}`}
           className="group block rounded-[2rem] border border-white/80 bg-white/90 p-5 shadow-xl shadow-gray-200/60 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gray-200/80"
@@ -106,7 +106,7 @@ export default async function HomePage() {
       </FadeUp>
 
       {others.length > 0 && (
-        <FadeUp delay={0.05}>
+        <FadeUp delay={0.45}>
           <section>
             <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-gray-400">
               Autres compétences porteuses
@@ -148,7 +148,7 @@ export default async function HomePage() {
         </FadeUp>
       )}
 
-      <FadeUp>
+      <FadeUp delay={0.1}>
         <section className="rounded-[1.75rem] border border-brand-green/10 bg-green-50/60 p-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">Pourquoi Telegram</p>
           <h3 className="mt-2 text-xl font-bold text-gray-900">
@@ -167,7 +167,7 @@ export default async function HomePage() {
         </section>
       </FadeUp>
 
-      <FadeUp>
+      <FadeUp delay={0.1}>
         <div className="rounded-[1.5rem] border border-dashed border-brand-green/20 bg-white/70 px-5 py-6 text-center">
           <p className="text-sm font-semibold text-gray-800">
             Tu n&apos;as pas besoin de tout apprendre d&apos;un coup.

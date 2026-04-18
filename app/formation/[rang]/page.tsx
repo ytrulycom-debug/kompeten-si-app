@@ -59,7 +59,7 @@ export default async function FormationPage({
   return (
     <div className="space-y-5">
 
-      <FadeUp delay={0}>
+      <FadeUp delay={0.05}>
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-apple-secondary transition hover:text-apple-text"
@@ -68,7 +68,7 @@ export default async function FormationPage({
         </Link>
       </FadeUp>
 
-      <FadeUp delay={0.05}>
+      <FadeUp delay={0.2}>
         <section className="rounded-3xl bg-white p-6 shadow-card sm:p-8">
           <div className="flex items-center gap-2">
             <span className="rounded-full bg-brand-green px-4 py-1.5 text-sm font-bold uppercase tracking-wider text-white">
@@ -114,7 +114,7 @@ export default async function FormationPage({
         </section>
       </FadeUp>
 
-      <FadeUp delay={0.1}>
+      <FadeUp delay={0.35}>
         <section className="rounded-3xl bg-white p-6 shadow-card">
           <div className="flex items-center gap-3 border-b border-apple-separator/50 pb-4">
             <span className="text-xl">{JOUR_EMOJIS[0]}</span>
@@ -140,7 +140,7 @@ export default async function FormationPage({
         </section>
       </FadeUp>
 
-      <FadeUp>
+      <FadeUp delay={0.1}>
         <section className="rounded-3xl bg-white p-6 shadow-card">
           <p className="text-sm font-semibold uppercase tracking-widest text-apple-tertiary">Programme</p>
           <h3 className="mt-2 text-2xl font-bold text-apple-text">Les 7 jours du parcours</h3>
@@ -167,7 +167,7 @@ export default async function FormationPage({
         </section>
       </FadeUp>
 
-      <FadeUp>
+      <FadeUp delay={0.1}>
         <section className="rounded-3xl bg-brand-green p-6 text-center text-white sm:p-8">
           <p className="text-sm font-semibold uppercase tracking-widest text-green-300">
             Passage à l&apos;action
@@ -192,7 +192,7 @@ export default async function FormationPage({
         </section>
       </FadeUp>
 
-      <FadeUp>
+      <FadeUp delay={0.1}>
         <Link
           href="/"
           className="block text-center text-sm text-apple-secondary transition hover:text-apple-text"
