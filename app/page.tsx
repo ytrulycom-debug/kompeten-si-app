@@ -115,7 +115,7 @@ export default async function HomePage() {
               <Link
                 key={item.rang}
                 href={`/formation/${item.rang}`}
-                className="group block rounded-[1.5rem] border border-gray-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-green/20 hover:shadow-md"
+                className="group flex flex-col rounded-[1.5rem] border border-gray-100 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-green/20 hover:shadow-md"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
@@ -129,14 +129,15 @@ export default async function HomePage() {
                       {item.nb_offres} offre{item.nb_offres > 1 ? 's' : ''} repérée{item.nb_offres > 1 ? 's' : ''}
                     </p>
                   </div>
-                  <span className="mt-1 shrink-0 text-2xl text-gray-200 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-green">
-                    ›
-                  </span>
                 </div>
-                <div className="mt-3 flex flex-wrap gap-1.5 text-xs text-gray-400">
-                  <span className="rounded-full bg-gray-50 px-2.5 py-1">📘 Jour 1 gratuit</span>
-                  <span className="rounded-full bg-gray-50 px-2.5 py-1">7 leçons</span>
-                  <span className="rounded-full bg-gray-50 px-2.5 py-1">Telegram</span>
+                <div className="mt-4 flex items-center justify-between gap-3">
+                  <div className="flex flex-wrap gap-1.5 text-xs text-gray-400">
+                    <span className="rounded-full bg-gray-50 px-2.5 py-1">📘 Jour 1 gratuit</span>
+                    <span className="rounded-full bg-gray-50 px-2.5 py-1">7 leçons</span>
+                  </div>
+                  <span className="shrink-0 rounded-xl bg-brand-green px-3.5 py-1.5 text-xs font-bold text-white transition group-hover:bg-green-800">
+                    Voir →
+                  </span>
                 </div>
               </Link>
             ))}
