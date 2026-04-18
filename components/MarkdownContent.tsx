@@ -49,14 +49,15 @@ export default function MarkdownContent({ text, className = '' }: Props) {
     const line = lines[i]
 
     if (!line.trim()) {
-      elements.push(<div key={`space-${i}`} className="h-2" />)
+      elements.push(<div key={`space-${i}`} className="h-4" />)
       i++
       continue
     }
 
+    // ## Heading 2
     if (line.startsWith('## ')) {
       elements.push(
-        <h3 key={i} className="font-bold text-gray-900 text-sm mt-3 mb-1">
+        <h3 key={i} className="font-bold text-gray-900 text-base mt-6 mb-2">
           {parseInline(line.slice(3), i)}
         </h3>
       )
@@ -64,9 +65,10 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
+    // ### Heading 3
     if (line.startsWith('### ')) {
       elements.push(
-        <h4 key={i} className="font-semibold text-gray-800 text-sm mt-2 mb-0.5">
+        <h4 key={i} className="font-semibold text-gray-800 text-sm mt-5 mb-1.5">
           {parseInline(line.slice(4), i)}
         </h4>
       )
@@ -74,9 +76,10 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
+    // **Titre :** seul sur une ligne
     if (/^\*\*[^*]+\*\*\s*:?\s*$/.test(line.trim())) {
       elements.push(
-        <h4 key={i} className="font-bold text-gray-900 text-sm mt-3 mb-1">
+        <h4 key={i} className="font-bold text-gray-900 text-sm mt-6 mb-2">
           {parseInline(line.trim().replace(/^\*\*|\*\*\s*:?\s*$/g, ''), i)}
         </h4>
       )
@@ -84,6 +87,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
+    // - bullet list or • bullet
     if (/^[-•]\s+/.test(line)) {
       const items: string[] = []
       while (i < lines.length && /^[-•]\s+/.test(lines[i])) {
@@ -91,10 +95,10 @@ export default function MarkdownContent({ text, className = '' }: Props) {
         i++
       }
       elements.push(
-        <ul key={`ul-${i}`} className="space-y-1 my-1 pl-1">
+        <ul key={`ul-${i}`} className="space-y-2.5 my-3 pl-1">
           {items.map((item, j) => (
-            <li key={j} className="flex gap-2 text-sm text-gray-800 leading-relaxed">
-              <span className="text-brand-green mt-0.5 shrink-0">•</span>
+            <li key={j} className="flex gap-2.5 text-sm text-gray-800 leading-7">
+              <span className="text-brand-green mt-1 shrink-0">•</span>
               <span className="text-justify">{parseInline(item, j)}</span>
             </li>
           ))}
@@ -103,6 +107,7 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
+    // Numbered list: 1. item
     if (/^\d+\.\s+/.test(line)) {
       const items: string[] = []
       const startNum = parseInt(line)
@@ -111,9 +116,9 @@ export default function MarkdownContent({ text, className = '' }: Props) {
         i++
       }
       elements.push(
-        <ol key={`ol-${i}`} className="space-y-1 my-1 pl-1" start={startNum}>
+        <ol key={`ol-${i}`} className="space-y-2.5 my-3 pl-1" start={startNum}>
           {items.map((item, j) => (
-            <li key={j} className="flex gap-2 text-sm text-gray-800 leading-relaxed">
+            <li key={j} className="flex gap-2.5 text-sm text-gray-800 leading-7">
               <span className="text-brand-green font-semibold shrink-0 w-4">{startNum + j}.</span>
               <span className="text-justify">{parseInline(item, j)}</span>
             </li>
@@ -123,13 +128,14 @@ export default function MarkdownContent({ text, className = '' }: Props) {
       continue
     }
 
+    // Normal paragraph
     elements.push(
-      <p key={i} className="text-sm text-gray-800 leading-relaxed text-justify">
+      <p key={i} className="text-sm text-gray-800 leading-7 text-justify">
         {parseInline(line, i)}
       </p>
     )
     i++
   }
 
-  return <div className={`space-y-0.5 ${className}`}>{elements}</div>
+  return <div className={`space-y-1 ${className}`}>{elements}</div>
 }
