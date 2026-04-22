@@ -9,6 +9,7 @@ interface ParcoursData {
   rang: number
   competence: string
   contenu_du_jour: string
+  tous_les_jours: string[]
   nb_offres: number
   semaine: string
 }
@@ -21,6 +22,7 @@ function MaFormationContent() {
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<ParcoursData | null>(null)
   const [erreur, setErreur] = useState<string | null>(null)
+  const [jourSelectionne, setJourSelectionne] = useState<number>(1)
 
   const chargerFormation = useCallback(async (id: string) => {
     if (!id.trim()) return
@@ -40,6 +42,7 @@ function MaFormationContent() {
         }
       } else {
         setData(json)
+        setJourSelectionne(json.jour_actuel)
       }
     } catch {
       setErreur('Impossible de contacter le serveur. Vérifie ta connexion.')
@@ -205,22 +208,48 @@ function MaFormationContent() {
             </div>
           </section>
 
+          {/* Sélecteur de jours */}
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {Array.from({ length: 7 }, (_, i) => {
+              const jour = i + 1
+              const debloque = jour <= data.jour_actuel
+              const actif = jour === jourSelectionne
+              return (
+                <button
+                  key={jour}
+                  onClick={() => debloque && setJourSelectionne(jour)}
+                  disabled={!debloque}
+                  className={`flex shrink-0 flex-col items-center rounded-2xl px-4 py-3 text-sm font-bold transition
+                    ${actif ? 'bg-brand-green text-white shadow-md' :
+                      debloque ? 'bg-white text-apple-text shadow-card hover:bg-apple-bg' :
+                      'cursor-not-allowed bg-apple-bg text-apple-tertiary opacity-50'}`}
+                >
+                  <span>{JOUR_EMOJIS[i]}</span>
+                  <span className="mt-1">J{jour}</span>
+                  {jour === data.jour_actuel && <span className="mt-0.5 text-[10px] font-semibold opacity-80">aujourd&apos;hui</span>}
+                </button>
+              )
+            })}
+          </div>
+
           {/* Content + sidebar */}
           <div className="grid gap-4 sm:grid-cols-[1.2fr_0.8fr]">
 
             {/* Lesson */}
             <section className="overflow-hidden rounded-3xl bg-white shadow-card">
               <div className="flex items-center gap-3 border-b border-apple-separator/50 px-5 py-4">
-                <span className="text-lg">{JOUR_EMOJIS[data.jour_actuel - 1] || '📌'}</span>
+                <span className="text-lg">{JOUR_EMOJIS[jourSelectionne - 1] || '📌'}</span>
                 <div>
                   <p className="text-sm font-bold text-apple-text">
-                    Jour {data.jour_actuel} — Leçon du jour
+                    Jour {jourSelectionne}
+                    {jourSelectionne === data.jour_actuel && ' — Leçon du jour'}
+                    {jourSelectionne < data.jour_actuel && ' — Révision'}
                   </p>
                   <p className="text-xs text-apple-secondary">Prends ton temps.</p>
                 </div>
               </div>
               <div className="p-5">
-                <MarkdownContent text={data.contenu_du_jour} />
+                <MarkdownContent text={data.tous_les_jours?.[jourSelectionne - 1] ?? data.contenu_du_jour} />
               </div>
             </section>
 

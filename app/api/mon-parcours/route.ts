@@ -72,14 +72,18 @@ export async function GET(req: Request) {
       )
     }
 
-    const contenuBrut = competence.jours?.[jourActuel - 1] ?? ''
-    const contenuNettoye = contenuBrut.replace(/\|\|\|[\s\S]*$/, '').trim()
+    const tousLesJours: string[] = (competence.jours ?? []).map((j: string) =>
+      j.replace(/\|\|\|[\s\S]*$/, '').trim()
+    )
+
+    const contenuNettoye = tousLesJours[jourActuel - 1] ?? ''
 
     return Response.json({
       jour_actuel: jourActuel,
       rang,
       competence: competence.competence ?? '',
       contenu_du_jour: contenuNettoye,
+      tous_les_jours: tousLesJours,
       nb_offres: competence.nb_offres ?? 0,
       semaine: formData.semaine ?? '',
     })
