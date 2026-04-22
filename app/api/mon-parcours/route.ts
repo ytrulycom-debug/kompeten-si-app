@@ -38,26 +38,17 @@ export async function GET(req: Request) {
     }
 
     const dateInscription = new Date(user.date_inscription)
-    if (Number.isNaN(dateInscription.getTime())) {
-      return Response.json(
-        { error: 'date_inscription invalide' },
-        { status: 502 }
-      )
-    }
-
-    const today = new Date()
-    const diffDays = Math.floor(
-      (today.getTime() - dateInscription.getTime()) / 86400000
-    )
-    const jourActuel = Math.min(7, Math.max(1, diffDays + 1))
+    const jourActuel = Number.isNaN(dateInscription.getTime())
+      ? 1
+      : Math.min(7, Math.max(1, Math.floor((Date.now() - dateInscription.getTime()) / 86400000) + 1))
 
     const formData = await fetchJson(formWebhookUrl)
     const rang = Number.parseInt(user.competence_choisie, 10)
 
     if (!Number.isInteger(rang)) {
       return Response.json(
-        { error: 'compétence_choisie invalide' },
-        { status: 502 }
+        { error: 'Utilisateur non trouvé' },
+        { status: 404 }
       )
     }
 
