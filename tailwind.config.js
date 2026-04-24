@@ -8,10 +8,11 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          gold:  '#F5A623',
-          green: '#2D6A4F',
-          dark:  '#1A1A2E',
-          light: '#FFF8F0',
+          gold:         '#F5A623',
+          green:        '#065F46',
+          'green-dark': '#043D2C',
+          dark:         '#1A1A2E',
+          light:        '#FFF8F0',
         },
         apple: {
           bg:        '#F5F5F7',

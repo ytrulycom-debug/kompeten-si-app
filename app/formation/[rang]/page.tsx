@@ -85,7 +85,7 @@ export default async function FormationPage({
         </h1>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          <span className="rounded-full bg-green-50 px-4 py-2 text-base font-semibold text-green-800">
+          <span className="rounded-full bg-emerald-50 px-4 py-2 text-base font-semibold text-brand-green">
             📈 {item.nb_offres} offre{item.nb_offres > 1 ? 's' : ''} cette semaine
           </span>
           <span className="rounded-full bg-apple-bg px-4 py-2 text-base text-apple-secondary">
@@ -101,7 +101,7 @@ export default async function FormationPage({
             href={telegramLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center rounded-2xl bg-brand-green px-7 py-5 text-lg font-bold text-white shadow-md transition hover:bg-green-800"
+            className="flex items-center justify-center rounded-2xl bg-brand-green px-7 py-5 text-lg font-bold text-white shadow-md transition hover:bg-brand-green-dark"
           >
             Démarrer sur Telegram →
           </a>
@@ -188,7 +188,7 @@ export default async function FormationPage({
           href={telegramLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-7 py-5 text-lg font-bold text-brand-green shadow-md transition hover:bg-green-50"
+          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-7 py-5 text-lg font-bold text-brand-green shadow-md transition hover:bg-emerald-50"
         >
           Démarrer gratuitement →
         </a>

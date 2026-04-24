@@ -58,6 +58,7 @@ export default async function HomePage() {
   return (
     <div className="space-y-4">
 
+      {/* Week badge */}
       <FadeUp delay={0.05}>
         <div className="text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-green/20 bg-white px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-brand-green shadow-sm">
@@ -69,6 +70,7 @@ export default async function HomePage() {
         </div>
       </FadeUp>
 
+      {/* Hero card — #1 compétence */}
       <FadeUp delay={0.25}>
         <Link
           href={`/formation/${hero.rang}`}
@@ -83,7 +85,7 @@ export default async function HomePage() {
           </h3>
 
           <div className="mt-3 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1.5 text-sm font-semibold text-green-800">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-brand-green">
               📈 {hero.nb_offres} offre{hero.nb_offres > 1 ? 's' : ''} cette semaine
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-sm font-medium text-gray-600">
@@ -98,13 +100,14 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-4 flex items-center gap-3">
-            <span className="rounded-xl bg-brand-green px-7 py-4 text-lg font-bold text-white shadow-md transition group-hover:bg-green-800">
+            <span className="rounded-xl bg-brand-green px-7 py-4 text-lg font-bold text-white shadow-md transition group-hover:bg-brand-green-dark">
               Commencer le parcours →
             </span>
           </div>
         </Link>
       </FadeUp>
 
+      {/* Other skills grid */}
       {others.length > 0 && (
         <FadeUp delay={0.45}>
           <section>
@@ -136,7 +139,7 @@ export default async function HomePage() {
                         <span className="rounded-full bg-gray-50 px-3 py-1.5">📘 Jour 1 gratuit</span>
                         <span className="rounded-full bg-gray-50 px-3 py-1.5">7 leçons</span>
                       </div>
-                      <span className="shrink-0 rounded-xl bg-brand-green px-5 py-2.5 text-base font-bold text-white transition group-hover:bg-green-800">
+                      <span className="shrink-0 rounded-xl bg-brand-green px-5 py-2.5 text-base font-bold text-white transition group-hover:bg-brand-green-dark">
                         Voir →
                       </span>
                     </div>
@@ -148,7 +151,8 @@ export default async function HomePage() {
         </FadeUp>
       )}
 
-      <FadeUp delay={0.1}>
+      {/* Why Telegram */}
+      <FadeUp>
         <section className="rounded-[1.75rem] border border-brand-green/10 bg-green-50/60 p-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-brand-green">Pourquoi Telegram</p>
           <h3 className="mt-2 text-xl font-bold text-gray-900">
@@ -167,7 +171,8 @@ export default async function HomePage() {
         </section>
       </FadeUp>
 
-      <FadeUp delay={0.1}>
+      {/* Footer CTA */}
+      <FadeUp>
         <div className="rounded-[1.5rem] border border-dashed border-brand-green/20 bg-white/70 px-5 py-6 text-center">
           <p className="text-sm font-semibold text-gray-800">
             Tu n&apos;as pas besoin de tout apprendre d&apos;un coup.
