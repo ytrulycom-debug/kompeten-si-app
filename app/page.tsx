@@ -46,7 +46,7 @@ export default async function HomePage() {
         <p className="mt-2 text-sm text-gray-500">
           Le radar se met à jour chaque lundi matin.
           <br />
-          Reviens bientôt !
+          Reviens bientôt !
         </p>
       </div>
     )
