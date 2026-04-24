@@ -20,13 +20,16 @@ interface ApiData {
 
 const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 async function getData(): Promise<ApiData | null> {
   const webhookUrl = process.env.N8N_WEBHOOK_URL
   if (!webhookUrl) return null
   try {
-    const res = await fetch(webhookUrl, { cache: 'no-store' })
+    const res = await fetch(webhookUrl, {
+      next: { revalidate: 3600 },
+      signal: AbortSignal.timeout(5000),
+    })
     if (!res.ok) return null
     return res.json()
   } catch {
@@ -188,7 +191,7 @@ export default async function FormationPage({
           href={telegramLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-7 py-5 text-lg font-bold text-brand-green shadow-md transition hover:bg-emerald-50"
+          className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-7 py-5 text-lg font-bold text-brand-green shadow-md transition hover:bg-green-50"
         >
           Démarrer gratuitement →
         </a>
