@@ -57,7 +57,8 @@ export default async function FormationPage({
     .filter((line: string) => line.trim())
     .slice(0, 5)
     .join('\n')
-  const telegramLink = `https://t.me/Kompetensi12bot?start=${rang}`
+  const bot = process.env.NEXT_PUBLIC_TELEGRAM_BOT ?? 'Kompetensi12bot'
+  const telegramLink = `https://t.me/${bot}?start=${rang}`
 
   return (
     <div className="space-y-5">

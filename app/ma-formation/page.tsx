@@ -15,6 +15,7 @@ interface ParcoursData {
 }
 
 const JOUR_EMOJIS = ['🌱', '📖', '💡', '🛠️', '🔗', '🚀', '🏆']
+const TELEGRAM_URL = `https://t.me/${process.env.NEXT_PUBLIC_TELEGRAM_BOT ?? 'Kompetensi12bot'}`
 
 function MaFormationContent() {
   const [chatId, setChatId] = useState('')
@@ -106,7 +107,7 @@ function MaFormationContent() {
         <div className="rounded-3xl border border-red-100 bg-red-50 p-5">
           <p className="text-sm font-semibold text-red-700">{erreur}</p>
           <a
-            href="https://t.me/Kompetensi12bot"
+            href={TELEGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 inline-block text-sm font-semibold text-brand-green hover:underline"
@@ -139,7 +140,7 @@ function MaFormationContent() {
             <button
               type="submit"
               disabled={loading || !chatId.trim()}
-              className="mt-5 w-full rounded-2xl bg-brand-green py-4 text-lg font-bold text-white shadow-md transition hover:bg-green-800 disabled:opacity-40"
+              className="mt-5 w-full rounded-2xl bg-brand-green py-4 text-lg font-bold text-white shadow-md transition hover:bg-brand-green-dark disabled:opacity-40"
             >
               Voir ma leçon du jour
             </button>
@@ -153,10 +154,10 @@ function MaFormationContent() {
               Lance d&apos;abord ton parcours sur Telegram. Tu recevras ensuite le lien avec ton identifiant.
             </p>
             <a
-              href="https://t.me/Kompetensi12bot"
+              href={TELEGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-brand-green px-6 py-4 text-lg font-bold text-white shadow-md transition hover:bg-green-800"
+              className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-brand-green px-6 py-4 text-lg font-bold text-white shadow-md transition hover:bg-brand-green-dark"
             >
               Ouvrir le bot Telegram →
             </a>
